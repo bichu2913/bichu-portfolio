@@ -40,6 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        body.classList.add('has-custom-cursor');
+
         const targetPointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
         const pointer = { x: targetPointer.x, y: targetPointer.y };
         let rafId = null;
@@ -231,8 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroImageWrapper = document.querySelector('.hero-image-wrapper');
     const heroImage = document.querySelector('.hero-image');
     const floatingBadges = [...document.querySelectorAll('.floating')];
-    const projectCards = [...document.querySelectorAll('.project-card')];
-    const skillCards = [...document.querySelectorAll('.skill-card')];
 
     function applyTilt(element, event, options = {}) {
         const rect = element.getBoundingClientRect();
@@ -291,21 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (!prefersReducedMotion && !hasCoarsePointer) {
-        document.addEventListener('pointermove', (event) => {
-            applyHeroMotion(event);
-
-            projectCards.forEach((card) => {
-                if (card.matches(':hover')) {
-                    applyTilt(card, event, { maxX: 6, maxY: 8 });
-                }
-            });
-
-            skillCards.forEach((card) => {
-                if (card.matches(':hover')) {
-                    applyTilt(card, event, { maxX: 3, maxY: 3 });
-                }
-            });
-        });
+        document.addEventListener('pointermove', applyHeroMotion);
 
         document.addEventListener('pointerleave', resetMotion);
     }
@@ -495,9 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     break;
                 case 'phone':
-                    if (!value) {
-                        message = 'Please enter your phone number.';
-                    } else if (!/^[+()\-\.\s\d]{7,}$/.test(value)) {
+                    if (value && !/^[+()\-\.\s\d]{7,}$/.test(value)) {
                         message = 'Please enter a valid phone number.';
                     }
                     break;
