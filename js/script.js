@@ -117,19 +117,36 @@ document.addEventListener('DOMContentLoaded', () => {
     updateNavbar();
 
     if (sections.length && navLinks.length) {
-        const sectionObserver = new IntersectionObserver((entries) => {
-            const visibleSection = entries
-                .filter((entry) => entry.isIntersecting)
-                .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
+        // Active section = the last one whose top has passed 35% of the viewport.
+        let activeId = '';
+        let navTicking = false;
 
-            if (!visibleSection) return;
+        function updateActiveNav() {
+            navTicking = false;
+            const line = window.innerHeight * 0.35;
+            const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+            let current = sections[0];
 
-            navLinks.forEach((link) => {
-                link.classList.toggle('active', link.getAttribute('href') === `#${visibleSection.target.id}`);
+            sections.forEach((section) => {
+                if (section.getBoundingClientRect().top <= line) current = section;
             });
-        }, { rootMargin: '-30% 0px -55% 0px', threshold: [0, 0.25, 0.5] });
+            if (atBottom) current = sections[sections.length - 1];
+            if (current.id === activeId) return;
 
-        sections.forEach((section) => sectionObserver.observe(section));
+            activeId = current.id;
+            navLinks.forEach((link) => {
+                link.classList.toggle('active', link.getAttribute('href') === `#${activeId}`);
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!navTicking) {
+                navTicking = true;
+                requestAnimationFrame(updateActiveNav);
+            }
+        }, { passive: true });
+        window.addEventListener('resize', updateActiveNav);
+        updateActiveNav();
     }
 
     document.querySelectorAll('.navbar-collapse .nav-link').forEach((link) => {
