@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        document.querySelectorAll('a, button, .project-card, .skill-card, .capability-card, .process-step, .contact-item, .social-icons a, .hero-image-wrapper, .floating, .form-control').forEach((element) => {
+        document.querySelectorAll('a, button, .project-card, .skill-card, .process-strip-item, .contact-item, .social-icons a, .hero-image-wrapper, .floating, .form-control').forEach((element) => {
             element.addEventListener('pointerenter', () => {
                 customCursor.classList.add('is-active');
                 customCursorRing.classList.add('is-active');
@@ -195,7 +195,6 @@ document.addEventListener('DOMContentLoaded', () => {
             '.hero-image-wrapper',
             '.about-image',
             '.about-copy',
-            '.capability-card',
             '.skill-card',
             '.process-step',
             '.timeline-item',
