@@ -1,0 +1,30 @@
+{
+  "_note": "Music app playlists. 'tracks' play through YouTube: each id must be a video that allows playback on other websites (international label releases usually do not). 'spotify' plays through Spotify's player: id is the track id from open.spotify.com/track/<id>. bpm drives the speaker lights. The first track plays first.",
+  "tracks": [
+    { "title": "Stay With Me (Remix)", "artist": "Paul-kun", "id": "_ghe12sqVj8", "bpm": 100 },
+    { "title": "Apna Friday Aayega", "artist": "Mollywood Times · Jakes Bejoy", "id": "64NtshqCm7I", "bpm": 120 },
+    { "title": "Neon Ride", "artist": "Officer On Duty · Jakes Bejoy", "id": "Vl-vpjFscUs", "bpm": 115 },
+    { "title": "Duppattawaali", "artist": "Odum Kuthira Chaadum Kuthira · Justin Varghese", "id": "JpAwGOW9lqU", "bpm": 110 },
+    { "title": "Kaattuchembakam", "artist": "Pallichattambi · Vishal Mishra", "id": "kzpS-A3QJqE", "bpm": 90 },
+    { "title": "Minnalvala", "artist": "Narivetta · Sid Sriram & Sithara", "id": "JKIVlNLTauU", "bpm": 85 },
+    { "title": "Nilaa Kaayum", "artist": "Kalamkaval · Mujeeb Majeed", "id": "Ay4l3KpaEbI", "bpm": 90 },
+    { "title": "Theyyam", "artist": "Konfused Kid", "id": "ptGgqtXeqyY", "bpm": 120 },
+    { "title": "Panjara Punch", "artist": "Alappuzha Gymkhana", "id": "WQNUqBIsF9A", "bpm": 125 },
+    { "title": "Rathinamo", "artist": "Saurav Srisan & Tanisha Gnanavel", "id": "Wjew3Rc1PYI", "bpm": 100 },
+    { "title": "Pesamale", "artist": "Siri Xander & Arra Aria Khayal", "id": "ptwUYrguUI8", "bpm": 100 },
+    { "title": "Manavaalan Thug", "artist": "Thallumaala · Dabzee", "id": "_eWvDaztcjI", "bpm": 130 },
+    { "title": "Malare", "artist": "Premam · Vijay Yesudas", "id": "0G2VxhV_gXM", "bpm": 80 },
+    { "title": "Pavizha Mazha", "artist": "Athiran · K S Harisankar", "id": "P-jKtzUuVcM", "bpm": 90 },
+    { "title": "Muthuchippi Poloru", "artist": "Thattathin Marayathu · Shaan Rahman", "id": "Xq2GDrTNTXE", "bpm": 95 },
+    { "title": "Ilakozhiye (Short)", "artist": "Thalavara · Electronic Kili", "id": "ccEmxqmll80", "bpm": 100 },
+    { "title": "Ada Bommale (Short)", "artist": "Vaazha 2", "id": "MLiFPRmnXic", "bpm": 110 },
+    { "title": "I Ain't Worried (Short)", "artist": "OneRepublic", "id": "Fhl4RqC36QY", "bpm": 140 },
+    { "title": "All The Stars (Short)", "artist": "Kendrick Lamar & SZA", "id": "L4W3MCt3XnI", "bpm": 97 },
+    { "title": "Dancin (Krono Remix, Short cover)", "artist": "Aaron Smith", "id": "s30CcrobOac", "bpm": 118 }
+  ],
+  "spotify": [
+    { "title": "Attention", "artist": "Charlie Puth", "id": "4iLqG9SeJSnt0cSPICSjxv", "bpm": 100 },
+    { "title": "Blinding Lights", "artist": "The Weeknd", "id": "0VjIjW4GlUZAMYd2vXMi3b", "bpm": 171 },
+    { "title": "After Hours", "artist": "The Weeknd", "id": "7yBoSdMGXNEGq7Gorad5qj", "bpm": 109 }
+  ]
+}

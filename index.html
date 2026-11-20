@@ -22,6 +22,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/os.css">
+<link rel="stylesheet" href="css/services.css">
+<link rel="stylesheet" href="css/idea.css">
 </head>
 <body>
 
@@ -40,9 +43,11 @@
 <ul class="navbar-nav ms-auto align-items-lg-center">
 <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
 <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+<li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
 <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
 <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
 <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+<li class="nav-item"><a class="nav-link" href="#writing">Writing</a></li>
 <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
 <li class="nav-item ms-lg-3">
 <a href="assets/cv/Bichu_B_Nadhan_Resume.pdf" class="btn btn-primary rounded-pill px-4" download>Resume</a>
@@ -53,59 +58,315 @@
 </nav>
 </header>
 
-<section id="home" class="hero">
-<div class="container">
-<div class="row align-items-center min-vh-100">
+<section id="home" class="os-hero" aria-label="Bichu OS: an interactive portfolio desktop">
+    <div class="os-room" aria-hidden="true"></div>
 
-<div class="col-lg-6">
-<span class="hero-badge">Flutter Developer Lead · AI Full Stack Developer</span>
+    <div class="os-rig">
+      <div class="os-setup">
+        <div class="lamp">
+            <div class="lamp-shade"></div>
+            <div class="lamp-arm"></div>
+            <div class="lamp-base"></div>
+            <div class="lamp-beam" aria-hidden="true"></div>
+            <button type="button" class="lamp-hit" aria-label="Toggle desk lamp" aria-pressed="false"></button>
+        </div>
 
-<h1 class="hero-title mt-4">
-Hi, I'm <span>Bichu</span>
-</h1>
+        <div class="speaker speaker-left" aria-hidden="true">
+            <span class="spk-tweeter"></span>
+            <span class="spk-woofer"></span>
+            <span class="spk-led"></span>
+        </div>
 
-<h3 class="typing mb-4">Flutter applications</h3>
+        <div class="monitor">
+            <div class="monitor-bezel">
+                <div class="os-viewport">
+                    <div class="os-screen" id="os-screen">
 
-<p class="hero-text">
-I build digital products that help businesses launch faster, serve users better,
-and grow with confidence using Flutter, Python, Firebase, Clean Architecture,
-REST APIs, BLoC and Generative AI.
-</p>
+                        <canvas class="os-wallpaper" aria-hidden="true"></canvas>
 
-<div class="hero-buttons mt-4">
-<a href="#projects" class="btn btn-primary btn-lg me-3">View My Work</a>
-<a href="#contact" class="btn btn-outline-light btn-lg">Start a Project</a>
-</div>
+                        <!-- top bar -->
+                        <header class="os-menubar">
+                            <span class="os-logo">BICHU <em>/ DEV</em></span>
+                            <nav class="os-menu" aria-label="Bichu OS apps">
+                                <button type="button" data-open="about">About</button>
+                                <button type="button" data-open="projects">Projects</button>
+                                <button type="button" data-open="skills">Skills</button>
+                                <button type="button" data-open="blog">Blog</button>
+                                <button type="button" data-open="contact">Contact</button>
+                                <button type="button" data-open="music">Music</button>
+                            </nav>
+                            <button type="button" class="os-np" data-open="music" hidden>
+                                <span class="os-np-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+                                <span class="os-np-title"></span>
+                            </button>
+                            <span class="os-status" aria-hidden="true">
+                                <i class="bi bi-wifi"></i><i class="bi bi-battery-full"></i>
+                                <time class="os-clock">--:--</time>
+                            </span>
+                        </header>
 
-<div class="row text-center mt-5 g-4">
-<div class="col-4">
-<h2>4+</h2>
-<p>Years Experience</p>
-</div>
-<div class="col-4">
-<h2>8</h2>
-<p>Products Built</p>
-</div>
-<div class="col-4">
-<h2>3</h2>
-<p>Companies</p>
-</div>
-</div>
+                        <!-- desktop -->
+                        <div class="os-desktop">
+                            <aside class="os-widgets">
+                                <div class="os-widget">
+                                    <h2>Dev stats</h2>
+                                    <dl class="os-stats">
+                                        <div><dt>Years</dt><dd>4+</dd></div>
+                                        <div><dt>Apps built</dt><dd>15+</dd></div>
+                                        <div><dt>Articles</dt><dd data-stat="articles">6</dd></div>
+                                        <div><dt>Repos</dt><dd data-stat="repos">–</dd></div>
+                                    </dl>
+                                </div>
+                                <div class="os-widget">
+                                    <h2>Latest skills</h2>
+                                    <div class="os-chips">
+                                        <span>Flutter</span><span>Next.js</span><span>Python</span>
+                                        <span>Supabase</span><span>Firebase</span><span>GenAI</span><span>RAG</span>
+                                    </div>
+                                </div>
+                                <div class="os-widget">
+                                    <h2>Connect</h2>
+                                    <div class="os-social">
+                                        <a href="https://github.com/bichu2913" target="_blank" rel="noopener" aria-label="GitHub"><i class="bi bi-github"></i></a>
+                                        <a href="https://www.linkedin.com/in/bichu-b-nadhan-7a6523222/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                                        <a href="https://medium.com/@bichuamz" target="_blank" rel="noopener" aria-label="Medium"><i class="bi bi-medium"></i></a>
+                                        <a href="https://www.instagram.com/bourbon__b" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                                    </div>
+                                </div>
+                            </aside>
 
-</div>
+                            <div class="os-main">
+                                <div class="os-profile">
+                                    <img src="assets/images/dp2.jpeg" alt="Bichu B Nadhan" width="96" height="96">
+                                    <div>
+                                        <h1>Bichu B Nadhan <span>//</span></h1>
+                                        <p class="os-role">Flutter Developer Lead &amp; AI Full Stack Developer</p>
+                                        <p class="os-tagline">Building things. Breaking limits.</p>
+                                    </div>
+                                </div>
 
-<div class="col-lg-6 text-center">
-<div class="hero-image-wrapper">
-<img src="assets/images/dp2.jpeg" class="img-fluid hero-image" alt="Bichu">
-<div class="floating flutter">Flutter</div>
-<div class="floating python">Python</div>
-<div class="floating firebase">Firebase</div>
-<div class="floating ai">OpenAI</div>
-</div>
-</div>
+                                <div class="os-cards">
+                                    <button type="button" class="os-card" data-open="projects">
+                                        <img src="assets/images/tian/tian-web-home.webp" alt="" width="1200" height="750">
+                                        <span class="os-card-kicker">Project 01 · Live</span>
+                                        <strong>TIAN Gold &amp; Diamond</strong>
+                                        <small>Jewellery commerce: web + app, solo build</small>
+                                        <span class="os-card-tech">Flutter · Next.js · Supabase</span>
+                                    </button>
+                                    <button type="button" class="os-card" data-open="skills">
+                                        <span class="os-card-icon"><i class="bi bi-stack"></i></span>
+                                        <span class="os-card-kicker">What I do</span>
+                                        <strong>Every layer</strong>
+                                        <small>Mobile apps, web, backend and AI</small>
+                                        <span class="os-card-tech">6 skill areas</span>
+                                    </button>
+                                    <button type="button" class="os-card" data-open="blog">
+                                        <span class="os-card-icon"><i class="bi bi-journal-text"></i></span>
+                                        <span class="os-card-kicker">Latest writing</span>
+                                        <strong class="os-latest-title">On Medium</strong>
+                                        <small>AI, agents and developer tools</small>
+                                        <span class="os-card-tech">Read the blog</span>
+                                    </button>
+                                </div>
 
-</div>
-</div>
+                                <p class="os-hint"><i class="bi bi-terminal"></i> Tip: open <button type="button" data-open="terminal">Terminal</button> and type <code>help</code></p>
+                            </div>
+                        </div>
+
+                        <!-- windows get added here -->
+                        <div class="os-windows"></div>
+
+                        <!-- dock -->
+                        <nav class="os-dock" aria-label="Dock">
+                            <button type="button" data-open="about" aria-label="About"><i class="bi bi-person-fill"></i><span>About</span></button>
+                            <button type="button" data-open="projects" aria-label="Projects"><i class="bi bi-folder-fill"></i><span>Projects</span></button>
+                            <button type="button" data-open="skills" aria-label="Skills"><i class="bi bi-lightning-charge-fill"></i><span>Skills</span></button>
+                            <button type="button" data-open="blog" aria-label="Blog"><i class="bi bi-journal-richtext"></i><span>Blog</span></button>
+                            <button type="button" data-open="music" aria-label="Music"><i class="bi bi-music-note-beamed"></i><span>Music</span></button>
+                            <button type="button" data-open="terminal" aria-label="Terminal"><i class="bi bi-terminal-fill"></i><span>Terminal</span></button>
+                            <button type="button" data-open="resume" aria-label="Resume"><i class="bi bi-file-earmark-person-fill"></i><span>Resume</span></button>
+                            <button type="button" data-open="contact" aria-label="Contact"><i class="bi bi-envelope-fill"></i><span>Contact</span></button>
+                        </nav>
+
+                        <!-- boot -->
+                        <div class="os-boot" aria-hidden="true">
+                            <div class="os-boot-logo">B</div>
+                            <pre class="os-boot-log"></pre>
+                            <div class="os-boot-bar"><span></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="monitor-chin" aria-hidden="true"><span></span></div>
+            <div class="monitor-neck" aria-hidden="true"></div>
+            <div class="monitor-foot" aria-hidden="true"></div>
+        </div>
+
+        <div class="speaker speaker-right" aria-hidden="true">
+            <span class="spk-tweeter"></span>
+            <span class="spk-woofer"></span>
+            <span class="spk-led"></span>
+        </div>
+
+        <div class="cpu" role="group" aria-label="Computer tower">
+            <div class="cpu-front">
+                <button type="button" class="cpu-power" aria-label="Power: sleep or wake the screen"><i class="bi bi-power"></i></button>
+                <button type="button" class="cpu-lamp" aria-label="Toggle desk lamp" aria-pressed="false"><i class="bi bi-lightbulb"></i></button>
+                <div class="cpu-media" role="group" aria-label="Music controls">
+                    <button type="button" data-music="prev" aria-label="Previous song"><i class="bi bi-skip-start-fill"></i></button>
+                    <button type="button" data-music="toggle" aria-label="Play or pause music"><i class="bi bi-play-fill"></i></button>
+                    <button type="button" data-music="next" aria-label="Next song"><i class="bi bi-skip-end-fill"></i></button>
+                </div>
+                <span class="cpu-hdd" aria-hidden="true"></span>
+            </div>
+            <div class="cpu-glass" aria-hidden="true">
+                <span class="cpu-fan"></span>
+                <span class="cpu-fan"></span>
+                <span class="cpu-fan"></span>
+                <span class="cpu-board"></span>
+            </div>
+        </div>
+      </div>
+        <div class="desk" aria-hidden="true">
+            <div class="desk-keyboard"></div>
+            <div class="desk-mouse"></div>
+        </div>
+    </div>
+
+    <a href="#about" class="os-scroll-cue">Scroll to explore <i class="bi bi-arrow-down"></i></a>
+
+    <!-- ===== App contents (cloned into windows by js/os.js) ===== -->
+    <template id="app-about" data-title="About" data-icon="bi-person-fill" data-size="560x500">
+        <div class="app-about">
+            <img src="assets/images/dp2.jpeg" alt="Portrait of Bichu B Nadhan" width="140" height="140">
+            <div>
+                <h3>Bichu B Nadhan</h3>
+                <p class="app-muted">Flutter Developer Lead · AI Full Stack Developer</p>
+                <p>I design and build complete digital products: the mobile app, the website, the backend and the AI features, end to end. I work with founders, startups and teams to turn an idea into a product that feels premium from day one.</p>
+                <ul class="app-facts">
+                    <li><i class="bi bi-geo-alt"></i> Alappuzha, Kerala, India</li>
+                    <li><i class="bi bi-briefcase"></i> 4+ years · Former Flutter Lead at Infigoes Techcon</li>
+                    <li><i class="bi bi-rocket-takeoff"></i> Solo-built TIAN Gold &amp; Diamond</li>
+                    <li><i class="bi bi-circle-fill app-live"></i> Available for freelance work</li>
+                </ul>
+            </div>
+        </div>
+    </template>
+
+    <template id="app-projects" data-title="Projects" data-icon="bi-folder-fill" data-size="760x540">
+        <div class="app-projects">
+            <article class="app-featured">
+                <img src="assets/images/tian/tian-web-home.webp" alt="TIAN Gold &amp; Diamond homepage" width="1200" height="750">
+                <div>
+                    <span class="app-kicker"><i class="bi bi-broadcast"></i> Live · Solo build</span>
+                    <h3>TIAN Gold &amp; Diamond</h3>
+                    <p>Luxury jewellery commerce for an Indian gold and diamond brand. I designed and built the whole product, from the website to the mobile app.</p>
+                    <ul class="app-list">
+                        <li>16 collections, wishlist and accounts</li>
+                        <li>Live IBJA gold rates and a gold value calculator</li>
+                        <li>"Ask TIAN" AI assistant with design-from-a-picture</li>
+                    </ul>
+                    <div class="app-tags"><span>Flutter</span><span>Next.js</span><span>Supabase</span><span>GenAI</span></div>
+                    <a class="app-btn" href="https://tiangoldanddiamond.com/" target="_blank" rel="noopener">Visit live site <i class="bi bi-arrow-up-right"></i></a>
+                </div>
+            </article>
+            <div class="app-note">
+                <strong>15+ apps shipped.</strong> Most are company products under NDA, so this shows only my freelance work, built from scratch.
+            </div>
+        </div>
+    </template>
+
+    <template id="app-skills" data-title="Skills" data-icon="bi-lightning-charge-fill" data-size="720x520">
+        <div class="app-skills">
+            <section><h4><i class="bi bi-phone"></i> Mobile</h4><p>Flutter · Dart · BLoC · Clean Architecture · Hive · AutoRoute · Responsive UI</p></section>
+            <section><h4><i class="bi bi-window"></i> Web</h4><p>Next.js · React · HTML/CSS · Responsive design · SEO basics</p></section>
+            <section><h4><i class="bi bi-hdd-network"></i> Backend</h4><p>Supabase · Firebase · REST APIs · Auth · Cloud Messaging · Django</p></section>
+            <section><h4><i class="bi bi-stars"></i> AI &amp; ML</h4><p>OpenAI · Gemini · GenAI · LLMs · RAG · Multimodal AI · Python</p></section>
+            <section><h4><i class="bi bi-plug"></i> Integrations</h4><p>Razorpay · Push notifications · Payments · Third-party APIs · Web scraping</p></section>
+            <section><h4><i class="bi bi-pencil-square"></i> Product &amp; tools</h4><p>Figma · UI/UX · Prototyping · Git &amp; GitHub · Postman · Android Studio</p></section>
+        </div>
+    </template>
+
+    <template id="app-blog" data-title="Blog — Medium" data-icon="bi-journal-richtext" data-size="720x540">
+        <div class="app-blog">
+            <div class="app-blog-list"><p class="app-muted">Loading articles…</p></div>
+            <a class="app-btn app-btn-ghost" href="https://medium.com/@bichuamz" target="_blank" rel="noopener">All articles on Medium <i class="bi bi-arrow-up-right"></i></a>
+        </div>
+    </template>
+
+    <template id="app-terminal" data-title="Terminal — bichu@os" data-icon="bi-terminal-fill" data-size="640x400">
+        <div class="app-terminal" role="log" aria-live="polite">
+            <div class="term-output"></div>
+            <label class="term-line"><span class="term-prompt">bichu@os:~$</span><input class="term-input" type="text" autocomplete="off" spellcheck="false" aria-label="Terminal command"></label>
+        </div>
+    </template>
+
+    <template id="app-music" data-title="Music" data-icon="bi-music-note-beamed" data-size="760x500">
+        <div class="app-music">
+          <div class="music-tabs" role="tablist" aria-label="Music source">
+            <button type="button" role="tab" data-src="youtube" aria-selected="true"><i class="bi bi-youtube"></i> Malayalam &amp; more</button>
+            <button type="button" role="tab" data-src="spotify" aria-selected="false"><i class="bi bi-spotify"></i> English hits</button>
+          </div>
+          <div class="music-pane" data-pane="youtube">
+            <div class="music-player">
+                <div class="music-video"><div class="music-yt"></div></div>
+                <div class="music-now">
+                    <span class="app-kicker">Now playing</span>
+                    <strong class="music-title">Stay With Me (Remix)</strong>
+                    <span class="music-artist app-muted">Paul-kun</span>
+                </div>
+                <div class="music-progress">
+                    <span class="music-time music-cur">0:00</span>
+                    <input class="music-seek" type="range" min="0" max="1000" value="0" aria-label="Seek">
+                    <span class="music-time music-dur">0:00</span>
+                </div>
+                <div class="music-controls">
+                    <button type="button" class="music-shuffle" aria-label="Shuffle" aria-pressed="false"><i class="bi bi-shuffle"></i></button>
+                    <button type="button" data-music="prev" aria-label="Previous"><i class="bi bi-skip-start-fill"></i></button>
+                    <button type="button" class="music-play" data-music="toggle" aria-label="Play or pause"><i class="bi bi-play-fill"></i></button>
+                    <button type="button" data-music="next" aria-label="Next"><i class="bi bi-skip-end-fill"></i></button>
+                    <label class="music-vol"><i class="bi bi-volume-up"></i><input type="range" min="0" max="100" value="70" aria-label="Volume"></label>
+                </div>
+                <p class="music-note app-muted">Plays the official videos through YouTube. Speaker lights pulse to each song's tempo.</p>
+            </div>
+            <ol class="music-list" aria-label="Playlist"></ol>
+          </div>
+          <div class="music-pane" data-pane="spotify" hidden>
+            <div class="music-player">
+                <div class="music-sp-embed"><div class="music-sp-host"></div></div>
+                <p class="music-note app-muted">Full songs if you're logged in to Spotify in this browser, otherwise 30-second previews.</p>
+            </div>
+            <ol class="music-list music-sp-list" aria-label="English playlist"></ol>
+          </div>
+        </div>
+    </template>
+
+    <template id="app-resume" data-title="Resume" data-icon="bi-file-earmark-person-fill" data-size="520x420">
+        <div class="app-resume">
+            <i class="bi bi-file-earmark-pdf app-resume-icon"></i>
+            <h3>Bichu_B_Nadhan_Resume.pdf</h3>
+            <p class="app-muted">Flutter Developer Lead · 4+ years · Mobile, web, backend and AI</p>
+            <div class="app-actions">
+                <a class="app-btn" href="assets/cv/Bichu_B_Nadhan_Resume.pdf" target="_blank" rel="noopener"><i class="bi bi-eye"></i> Open</a>
+                <a class="app-btn app-btn-ghost" href="assets/cv/Bichu_B_Nadhan_Resume.pdf" download><i class="bi bi-download"></i> Download</a>
+            </div>
+        </div>
+    </template>
+
+    <template id="app-contact" data-title="Contact" data-icon="bi-envelope-fill" data-size="520x460">
+        <div class="app-contact">
+            <h3>Let's build something.</h3>
+            <p class="app-muted">Freelance projects, product builds and long-term collaboration. I reply within 24 hours.</p>
+            <div class="app-links">
+                <a href="mailto:bichuamz@gmail.com"><i class="bi bi-envelope"></i> bichuamz@gmail.com</a>
+                <a href="https://wa.me/918606892913" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+                <a href="https://www.linkedin.com/in/bichu-b-nadhan-7a6523222/" target="_blank" rel="noopener"><i class="bi bi-linkedin"></i> LinkedIn</a>
+                <a href="https://github.com/bichu2913" target="_blank" rel="noopener"><i class="bi bi-github"></i> GitHub</a>
+                <a href="https://www.instagram.com/bourbon__b" target="_blank" rel="noopener"><i class="bi bi-instagram"></i> Instagram</a>
+            </div>
+            <a class="app-btn" href="#contact" data-close-os><i class="bi bi-chat-dots"></i> Send a message</a>
+        </div>
+    </template>
 </section>
 
 <section id="about" class="section-padding">
@@ -205,11 +466,98 @@ REST APIs, BLoC and Generative AI.
 
 <!-- skills -->
 
+<section id="services" class="svc section-padding" aria-labelledby="svc-title">
+    <div class="svc-bg" aria-hidden="true">
+        <span class="svc-float f1"><i class="bi bi-code-slash"></i></span>
+        <span class="svc-float f2"><i class="bi bi-box"></i></span>
+        <span class="svc-float f3"><i class="bi bi-braces"></i></span>
+        <span class="svc-float f4"><i class="bi bi-cpu"></i></span>
+        <span class="svc-float f5"><i class="bi bi-diagram-3"></i></span>
+    </div>
+
+    <div class="container">
+        <header class="svc-intro">
+            <div class="svc-intro-copy">
+                <span class="section-tag">SERVICES</span>
+                <h2 id="svc-title" class="svc-title">Engineering Digital <span>Experiences.</span></h2>
+                <p class="svc-lead">From concept to production. I build intelligent software, beautiful digital experiences and scalable technology solutions across platforms.</p>
+                <dl class="svc-facts">
+                    <div><dt>12</dt><dd>Services</dd></div>
+                    <div><dt>4</dt><dd>Disciplines</dd></div>
+                    <div><dt>1</dt><dd>Point of contact</dd></div>
+                </dl>
+            </div>
+            <div class="svc-core" aria-hidden="true">
+                <canvas class="svc-core-canvas"></canvas>
+                <div class="svc-core-fallback"><span></span><span></span><span></span></div>
+                <span class="svc-core-label l1">Apps</span>
+                <span class="svc-core-label l2">AI</span>
+                <span class="svc-core-label l3">Backend</span>
+                <span class="svc-core-label l4">Design</span>
+            </div>
+        </header>
+
+        <div class="svc-filters" role="toolbar" aria-label="Filter services">
+            <button type="button" class="svc-filter is-active" data-filter="all" aria-pressed="true">All <span>12</span></button>
+            <!-- group filters are added by js/services.js -->
+        </div>
+
+        <div class="svc-grid" aria-live="polite">
+            <noscript>
+                <p class="svc-noscript">Mobile apps · Web applications · Desktop software · Websites · AI &amp; Generative AI · Backend &amp; APIs · Automation · IoT · Data &amp; ML · Cloud &amp; DevOps · Browser extensions · UI/UX design</p>
+            </noscript>
+        </div>
+
+        <div class="svc-closing">
+            <h3 class="svc-closing-title">One Developer. Multiple Platforms. <span>Complete Solutions.</span></h3>
+            <p class="svc-closing-text">From designing intuitive experiences to engineering intelligent systems and deploying production-ready applications, I turn ideas into digital products.</p>
+            <ol class="svc-flow">
+                <li style="--n:0"><span class="svc-flow-node"><i class="bi bi-vector-pen"></i></span><strong>Design</strong><small>Flows, UI and prototypes</small></li>
+                <li style="--n:1"><span class="svc-flow-node"><i class="bi bi-code-square"></i></span><strong>Development</strong><small>Apps, web and backend</small></li>
+                <li style="--n:2"><span class="svc-flow-node"><i class="bi bi-stars"></i></span><strong>AI Integration</strong><small>Assistants, RAG and agents</small></li>
+                <li style="--n:3"><span class="svc-flow-node"><i class="bi bi-rocket-takeoff"></i></span><strong>Deployment</strong><small>Cloud, CI/CD and monitoring</small></li>
+            </ol>
+            <a href="#contact" class="btn btn-primary btn-lg svc-closing-cta">Start a project <i class="bi bi-arrow-right ms-1"></i></a>
+        </div>
+    </div>
+
+    <dialog class="svc-panel" aria-labelledby="svc-panel-title">
+        <div class="svc-panel-inner">
+            <button type="button" class="svc-panel-close" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+            <div class="svc-panel-head">
+                <div class="svc-icon svc-icon-lg"><span class="svc-icon-back"></span><span class="svc-icon-face"><i class="bi"></i></span></div>
+                <div>
+                    <span class="svc-panel-group"></span>
+                    <h3 id="svc-panel-title" class="svc-panel-title"></h3>
+                </div>
+            </div>
+            <p class="svc-panel-desc"></p>
+            <div class="svc-panel-cols">
+                <div>
+                    <h4>What I build</h4>
+                    <ul class="svc-panel-features"></ul>
+                </div>
+                <div>
+                    <h4>Technologies</h4>
+                    <div class="svc-panel-tech svc-tags"></div>
+                    <h4 class="svc-panel-ex-title">Work &amp; writing</h4>
+                    <ul class="svc-panel-examples"></ul>
+                </div>
+            </div>
+            <div class="svc-panel-foot">
+                <button type="button" class="svc-panel-nav" data-step="-1" aria-label="Previous service"><i class="bi bi-arrow-left"></i></button>
+                <a href="#contact" class="btn btn-primary svc-panel-cta">Discuss this project <i class="bi bi-arrow-right ms-1"></i></a>
+                <button type="button" class="svc-panel-nav" data-step="1" aria-label="Next service"><i class="bi bi-arrow-right"></i></button>
+            </div>
+        </div>
+    </dialog>
+</section>
+
 <section id="skills" class="skills section-padding">
     <div class="container">
 
         <div class="text-center mb-5">
-            <span class="section-tag">WHAT I DO</span>
+            <span class="section-tag">SKILLS</span>
             <h2 class="section-title">Complete Products, End to End</h2>
             <p class="section-description">
                 Mobile app, website, backend and AI: I design and build every layer, so the product ships as one piece.
@@ -217,59 +565,110 @@ REST APIs, BLoC and Generative AI.
         </div>
 
         <div class="skill-category-grid">
-
             <div class="skill-card">
                 <div class="skill-card-header">
                     <span class="skill-card-index">01</span>
                     <div class="skill-card-icon"><i class="bi bi-phone"></i></div>
                 </div>
-                <h3>MOBILE APPS</h3>
-                <p>Cross-platform Flutter apps for Android and iOS with clean architecture and polished, responsive UI.</p>
+                <h3>MOBILE DEVELOPMENT</h3>
+                <p>Scalable, maintainable cross-platform apps with polished, responsive UI.</p>
                 <div class="skill-chip-group">
                     <span class="skill-chip">Flutter</span>
                     <span class="skill-chip">Dart</span>
                     <span class="skill-chip">BLoC</span>
                     <span class="skill-chip">Clean Architecture</span>
                     <span class="skill-chip">Hive</span>
-                    <span class="skill-chip">Push Notifications</span>
+                    <span class="skill-chip">AutoRoute</span>
+                    <span class="skill-chip">State Management</span>
+                    <span class="skill-chip">Responsive UI</span>
                 </div>
             </div>
-
             <div class="skill-card">
                 <div class="skill-card-header">
                     <span class="skill-card-index">02</span>
-                    <div class="skill-card-icon"><i class="bi bi-cloud-check"></i></div>
+                    <div class="skill-card-icon"><i class="bi bi-window"></i></div>
                 </div>
-                <h3>WEB &amp; BACKEND</h3>
-                <p>Fast customer-facing websites and the backend behind them: auth, data, storage, payments and APIs.</p>
+                <h3>WEB DEVELOPMENT</h3>
+                <p>Fast, modern websites and dashboards that work beautifully on every screen.</p>
                 <div class="skill-chip-group">
                     <span class="skill-chip">Next.js</span>
-                    <span class="skill-chip">Supabase</span>
-                    <span class="skill-chip">Firebase</span>
-                    <span class="skill-chip">REST APIs</span>
-                    <span class="skill-chip">Razorpay</span>
+                    <span class="skill-chip">React</span>
+                    <span class="skill-chip">HTML &amp; CSS</span>
+                    <span class="skill-chip">JavaScript</span>
+                    <span class="skill-chip">Responsive Design</span>
+                    <span class="skill-chip">SEO Basics</span>
                 </div>
             </div>
-
             <div class="skill-card">
                 <div class="skill-card-header">
                     <span class="skill-card-index">03</span>
+                    <div class="skill-card-icon"><i class="bi bi-cloud-check"></i></div>
+                </div>
+                <h3>BACKEND &amp; CLOUD</h3>
+                <p>Connected products with authentication, real-time data, storage and APIs.</p>
+                <div class="skill-chip-group">
+                    <span class="skill-chip">Supabase</span>
+                    <span class="skill-chip">Firebase</span>
+                    <span class="skill-chip">Cloud Firestore</span>
+                    <span class="skill-chip">Authentication</span>
+                    <span class="skill-chip">Cloud Messaging</span>
+                    <span class="skill-chip">REST APIs</span>
+                    <span class="skill-chip">Django</span>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="skill-card-index">04</span>
                     <div class="skill-card-icon"><i class="bi bi-stars"></i></div>
                 </div>
                 <h3>AI &amp; AUTOMATION</h3>
-                <p>AI features that do real work: shopping assistants, image-to-design, content generation and automated workflows.</p>
+                <p>AI and automation that make products smarter and workflows faster.</p>
                 <div class="skill-chip-group">
                     <span class="skill-chip">Python</span>
                     <span class="skill-chip">OpenAI</span>
                     <span class="skill-chip">Gemini</span>
                     <span class="skill-chip">Generative AI</span>
+                    <span class="skill-chip">LLMs</span>
+                    <span class="skill-chip">RAG</span>
+                    <span class="skill-chip">Multimodal AI</span>
                     <span class="skill-chip">Web Scraping</span>
+                    <span class="skill-chip">Pandas</span>
                 </div>
             </div>
-
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="skill-card-index">05</span>
+                    <div class="skill-card-icon"><i class="bi bi-pencil-square"></i></div>
+                </div>
+                <h3>UI / UX &amp; PRODUCT</h3>
+                <p>Understanding user problems and shaping them into intuitive experiences.</p>
+                <div class="skill-chip-group">
+                    <span class="skill-chip">Figma</span>
+                    <span class="skill-chip">UI Design</span>
+                    <span class="skill-chip">UX Design</span>
+                    <span class="skill-chip">User Flows</span>
+                    <span class="skill-chip">Prototyping</span>
+                    <span class="skill-chip">Product Planning</span>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="skill-card-index">06</span>
+                    <div class="skill-card-icon"><i class="bi bi-plug"></i></div>
+                </div>
+                <h3>INTEGRATIONS &amp; TOOLS</h3>
+                <p>Payments, notifications, third-party services and a solid delivery workflow.</p>
+                <div class="skill-chip-group">
+                    <span class="skill-chip">Razorpay</span>
+                    <span class="skill-chip">Push Notifications</span>
+                    <span class="skill-chip">Third-party APIs</span>
+                    <span class="skill-chip">Git &amp; GitHub</span>
+                    <span class="skill-chip">Postman</span>
+                    <span class="skill-chip">Android Studio</span>
+                    <span class="skill-chip">VS Code</span>
+                </div>
+            </div>
         </div>
-
-        <p class="skills-tools"><span>Also in my toolkit</span> Figma · Git &amp; GitHub · Postman · Android Studio</p>
 
     </div>
 </section>
@@ -279,120 +678,70 @@ REST APIs, BLoC and Generative AI.
 
 
 <section id="experience" class="experience section-padding">
+    <div class="container">
 
-<div class="container">
+        <div class="text-center mb-5">
+            <span class="section-tag">EXPERIENCE</span>
+            <h2 class="section-title">Professional Journey</h2>
+        </div>
 
-<div class="text-center mb-5">
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">Freelance · Ongoing <span class="timeline-now">Now</span></span>
+                    <h3>Independent Product Developer</h3>
+                    <h5>Solo client builds</h5>
+                    <ul class="timeline-list">
+                        <li>Designed and built TIAN Gold &amp; Diamond end to end, alone: the customer website, the mobile app, the backend and the AI assistant</li>
+                        <li>Next.js, Flutter and Supabase, with live gold rates and an AI design-from-a-picture feature</li>
+                        <li>Work directly with founders, from product planning to launch</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2024 – 2026</span>
+                    <h3>Flutter Developer Lead</h3>
+                    <h5>Infigoes Techcon LLP</h5>
+                    <ul class="timeline-list">
+                        <li>Led Flutter application development across client projects</li>
+                        <li>Owned Clean Architecture standards and technical direction for the team</li>
+                        <li>Integrated REST APIs and Firebase services</li>
+                        <li>Mentored developers and reviewed their work</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2023 – 2024 </span>
+                    <h3>Flutter Developer</h3>
+                    <h5>SunRule</h5>
+                    <ul class="timeline-list">
+                        <li>Developed production-ready Flutter applications</li>
+                        <li>Implemented BLoC state management</li>
+                        <li>Built Firebase and REST API integrations</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2022 – 2023 </span>
+                    <h3>Flutter Developer Intern</h3>
+                    <h5>Brototype</h5>
+                    <ul class="timeline-list">
+                        <li>Built multiple Flutter projects from scratch</li>
+                        <li>Learned Clean Architecture, Firebase and Git</li>
+                        <li>Focused on responsive UI development</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-<span class="section-tag">
-Experience
-</span>
-
-<h2 class="section-title">
-Professional Journey
-</h2>
-
-</div>
-
-<div class="timeline">
-
-<div class="timeline-item">
-
-<div class="timeline-dot"></div>
-
-<div class="timeline-content">
-
-<span class="timeline-date">
-2024 - Present
-</span>
-
-<h3>
-Flutter Developer Lead
-</h3>
-
-<h5>
-Infigoes Techcon LLP
-</h5>
-
-<p>
-
-Leading Flutter application development,
-maintaining Clean Architecture,
-integrating REST APIs,
-Firebase and mentoring developers.
-
-</p>
-
-</div>
-
-</div>
-
-<div class="timeline-item">
-
-<div class="timeline-dot"></div>
-
-<div class="timeline-content">
-
-<span class="timeline-date">
-2023 - 2024
-</span>
-
-<h3>
-Flutter Developer
-</h3>
-
-<h5>
-SunRule
-</h5>
-
-<p>
-
-Developed production-ready applications,
-implemented BLoC,
-Firebase,
-and API integrations.
-
-</p>
-
-</div>
-
-</div>
-
-<div class="timeline-item">
-
-<div class="timeline-dot"></div>
-
-<div class="timeline-content">
-
-<span class="timeline-date">
-2022 - 2023
-</span>
-
-<h3>
-Flutter Developer Intern
-</h3>
-
-<h5>
-Brototype
-</h5>
-
-<p>
-
-Built multiple Flutter projects,
-learned Clean Architecture,
-Firebase,
-Git and responsive UI development.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
+    </div>
 </section>
 
 
@@ -403,8 +752,17 @@ Git and responsive UI development.
             <span class="section-tag">Portfolio</span>
             <h2 class="section-title">Selected Work</h2>
             <p class="section-description">
-                Real products, real problems and real user experiences built to look good and work even better.
+                Freelance products I designed and built from scratch, end to end.
             </p>
+        </div>
+
+        <div class="work-note">
+            <div class="work-note-stat"><strong>15+</strong><span>apps shipped</span></div>
+            <div class="work-note-text">
+                <span class="work-note-kicker"><i class="bi bi-shield-lock"></i> Freelance work only</span>
+                <p>I've built <strong>15+ apps</strong>, but most of them are company products under NDA, so they aren't shown here.
+                This portfolio only shows <strong>freelance products I designed and built from scratch</strong>.</p>
+            </div>
         </div>
 
         <article class="project-card project-featured">
@@ -457,22 +815,149 @@ Git and responsive UI development.
                 </div>
             </div>
         </article>
+    </div>
+</section>
 
+<section id="idea" class="idea section-padding" aria-labelledby="idea-title">
+    <div class="container">
+        <div class="idea-panel">
+            <span class="idea-ribbon"><i class="bi bi-lightning-charge-fill"></i> Open for collaboration</span>
 
+            <div class="idea-grid">
+                <div class="idea-copy">
+                    <span class="section-tag">CO-BUILD</span>
+                    <h2 id="idea-title" class="idea-title">Have an Idea? <span>Let's Build It Together.</span></h2>
+                    <p class="idea-kicker">You bring the vision. We bring the technology.</p>
+                    <p class="idea-text">Have an innovative idea for an app, SaaS platform, AI product or software solution? Share it with us.</p>
+                    <p class="idea-text">If we see potential, we can explore a collaboration where we contribute our technical expertise, help develop your idea into a real product, and potentially share in its future success.</p>
 
-        <div class="earlier-work">
-            <h3 class="earlier-work-title">Earlier work</h3>
-            <div class="earlier-work-grid">
-                <div class="earlier-item"><strong>Personal Wealth Management</strong><span>AI-powered budgeting, expense tracking and goals.</span></div>
-                <div class="earlier-item"><strong>Relt Ecommerce</strong><span>Cart, wishlist, Razorpay payments and admin panel.</span></div>
-                <div class="earlier-item"><strong>PlantATree</strong><span>Tree-planting rewards through a digital credit system.</span></div>
-                <div class="earlier-item"><strong>EazyHous</strong><span>Connects customers with home-service professionals.</span></div>
-                <div class="earlier-item"><strong>Anywhere Matrimony</strong><span>Profile discovery and matchmaking app.</span></div>
-                <div class="earlier-item"><strong>Wedbell</strong><span>Wedding social platform for couples and vendors.</span></div>
-                <div class="earlier-item"><strong>Zingzo Music Player</strong><span>Offline player with playlists and equalizer.</span></div>
+                    <div class="idea-ctas">
+                        <button type="button" class="btn btn-primary btn-lg idea-share" data-idea-open>
+                            <i class="bi bi-lightbulb-fill me-2"></i>Share Your Idea
+                        </button>
+                        <a class="btn btn-outline-light btn-lg idea-wa" data-idea-whatsapp href="#" target="_blank" rel="noopener">
+                            <i class="bi bi-whatsapp me-2"></i>Discuss on WhatsApp
+                        </a>
+                    </div>
+                    <p class="idea-mail">Other enquiries: <a data-idea-email href="#"></a></p>
+                </div>
+
+                <!-- idea → product illustration -->
+                <div class="idea-visual" aria-hidden="true">
+                    <div class="idea-scene">
+                        <div class="idea-orbit"></div>
+                        <div class="idea-bulb">
+                            <i class="bi bi-lightbulb"></i>
+                            <span class="idea-spark s1"></span><span class="idea-spark s2"></span><span class="idea-spark s3"></span>
+                        </div>
+                        <div class="idea-beam"><span></span><span></span><span></span></div>
+                        <div class="idea-device">
+                            <div class="idea-device-bar"><i></i><i></i><i></i></div>
+                            <div class="idea-ui">
+                                <span class="u u1"></span>
+                                <span class="u u2"></span>
+                                <span class="u u3"></span>
+                                <span class="u u4"></span>
+                                <span class="u u5"></span>
+                                <span class="u u6"></span>
+                            </div>
+                            <span class="idea-launch"><i class="bi bi-rocket-takeoff-fill"></i> Live</span>
+                        </div>
+                        <span class="idea-chip c1"><i class="bi bi-vector-pen"></i> Design</span>
+                        <span class="idea-chip c2"><i class="bi bi-code-slash"></i> Build</span>
+                        <span class="idea-chip c3"><i class="bi bi-stars"></i> AI</span>
+                    </div>
+                </div>
+            </div>
+
+            <ol class="idea-steps">
+                <li style="--n:0"><span class="idea-step-num">01</span><strong>Share your idea</strong><small>Tell us what you want to build and why.</small></li>
+                <li style="--n:1"><span class="idea-step-num">02</span><strong>We evaluate it</strong><small>Potential, feasibility and the best way to build it.</small></li>
+                <li style="--n:2"><span class="idea-step-num">03</span><strong>Agree the terms</strong><small>Initial commitment, development scope and partnership terms.</small></li>
+                <li style="--n:3"><span class="idea-step-num">04</span><strong>Build &amp; grow together</strong><small>Build, launch and grow the product as partners.</small></li>
+            </ol>
+
+            <div class="idea-terms">
+                <i class="bi bi-file-earmark-check"></i>
+                <p><strong>How the partnership works:</strong> the proposed initial commitment is <strong>15–20% of the agreed development contribution</strong>. The remaining arrangement, including any equity or revenue share, is negotiated individually and documented in a written agreement.</p>
             </div>
         </div>
+    </div>
 
+    <dialog class="idea-dialog" aria-labelledby="idea-form-title">
+        <form class="idea-form" novalidate>
+            <button type="button" class="idea-close" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+            <span class="section-tag">SHARE YOUR IDEA</span>
+            <h3 id="idea-form-title">Tell us what you want to build</h3>
+            <p class="idea-form-sub">Everything you share stays private. We reply within 48 hours.</p>
+
+            <div class="idea-fields">
+                <label class="idea-field">
+                    <span>Your name *</span>
+                    <input name="name" type="text" autocomplete="name" required minlength="2">
+                </label>
+                <label class="idea-field">
+                    <span>Email *</span>
+                    <input name="email" type="email" autocomplete="email" required>
+                </label>
+                <label class="idea-field">
+                    <span>WhatsApp number <em>(optional)</em></span>
+                    <input name="whatsapp" type="tel" autocomplete="tel" placeholder="+91 …">
+                </label>
+                <label class="idea-field">
+                    <span>Product type *</span>
+                    <select name="type" required>
+                        <option value="">Choose one</option>
+                        <option>Mobile app</option>
+                        <option>Web app / SaaS</option>
+                        <option>AI product</option>
+                        <option>Website</option>
+                        <option>Desktop software</option>
+                        <option>IoT / hardware</option>
+                        <option>Other</option>
+                    </select>
+                </label>
+                <label class="idea-field idea-field-full">
+                    <span>Your product idea *</span>
+                    <textarea name="idea" rows="3" required minlength="20" placeholder="What is it, and what does it do?"></textarea>
+                </label>
+                <label class="idea-field idea-field-full">
+                    <span>Problem it solves *</span>
+                    <textarea name="problem" rows="2" required minlength="10" placeholder="What pain point does it remove?"></textarea>
+                </label>
+                <label class="idea-field idea-field-full">
+                    <span>Target audience *</span>
+                    <input name="audience" type="text" required minlength="3" placeholder="Who will use or pay for it?">
+                </label>
+                <input type="text" name="website" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+            </div>
+
+            <div class="idea-status" role="status" aria-live="polite"></div>
+            <div class="idea-form-foot">
+                <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-send-fill me-2"></i>Send my idea</button>
+                <a class="idea-form-alt" data-idea-whatsapp href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> or chat on WhatsApp</a>
+            </div>
+        </form>
+    </dialog>
+</section>
+
+<section id="writing" class="writing section-padding">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="section-tag">WRITING</span>
+            <h2 class="section-title">Notes on AI &amp; Building Software</h2>
+            <p class="section-description">
+                I write on Medium about AI agents, multimodal AI, developer tools and the things I build.
+            </p>
+        </div>
+        <div class="writing-grid" aria-live="polite">
+            <p class="writing-empty">Loading articles…</p>
+        </div>
+        <div class="text-center mt-5">
+            <a href="https://medium.com/@bichuamz" class="btn btn-outline-light" target="_blank" rel="noopener">
+                <i class="bi bi-medium me-2"></i>Read all on Medium
+            </a>
+        </div>
     </div>
 </section>
 
@@ -738,7 +1223,13 @@ Git and responsive UI development.
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="js/site-config.js"></script>
 <script src="js/script.js"></script>
+<script src="js/os.js"></script>
+<script src="js/writing.js"></script>
+<script src="js/services-data.js"></script>
+<script src="js/services.js"></script>
+<script src="js/idea.js"></script>
 
 </body>
 </html>

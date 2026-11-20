@@ -1,0 +1,131 @@
+// Services shown in the #services section. Each entry renders through the same card
+// component in js/services.js; edit text here, not in the HTML.
+window.SERVICES_DATA = (() => {
+    const MEDIUM = {
+        multimodal: { label: 'Multimodal AI for Developers (article)', url: 'https://medium.com/@bichuamz/multimodal-ai-for-developers-build-ai-that-can-see-hear-speak-create-957218294a4f' },
+        agents: { label: 'AI Is Moving to Always-On Software Agents (article)', url: 'https://medium.com/@bichuamz/openai-devday-2026-ai-is-moving-from-chatbots-to-always-on-software-agents-197cd16d7b7b' },
+        django: { label: 'Secure Multi-Step Registration with Django (article)', url: 'https://medium.com/@bichuamz/building-a-secure-multi-step-registration-form-with-django-a298c39f7b9f' },
+        jobs: { label: 'GenAI Job Market Analyzer (article)', url: 'https://medium.com/@bichuamz/building-a-genai-job-market-analyzer-scraping-cleaning-and-analyzing-thousands-of-ai-job-8f8b1eb8a16a' },
+    };
+    const TIAN = { label: 'TIAN Gold & Diamond', url: 'https://tiangoldanddiamond.com/' };
+    const PORTFOLIO = { label: 'This portfolio (Bichu OS)', url: '#home' };
+
+    return {
+        groups: [
+            { id: 'apps', name: 'Application Development', short: 'Apps', icon: 'bi-grid-1x2' },
+            { id: 'ai', name: 'AI & Intelligent Systems', short: 'AI', icon: 'bi-stars' },
+            { id: 'engineering', name: 'Backend & Engineering', short: 'Engineering', icon: 'bi-cpu' },
+            { id: 'design', name: 'Design & Experience', short: 'Design', icon: 'bi-palette' },
+        ],
+        services: [
+            {
+                id: 'mobile', group: 'apps', icon: 'bi-phone',
+                title: 'Mobile App Development',
+                summary: 'Fast, beautiful apps for Android and iOS from one codebase.',
+                description: 'I design and build production-ready mobile apps with Flutter: smooth interfaces, clean architecture and reliable backends, so one codebase ships to both Android and iOS and stays easy to grow.',
+                features: ['Android applications', 'iOS applications', 'Cross-platform applications', 'E-commerce applications', 'Business applications', 'AI-powered mobile applications'],
+                tech: ['Flutter', 'Dart', 'Firebase', 'REST APIs'],
+                examples: [{ label: 'TIAN Gold & Diamond mobile app', url: TIAN.url }],
+            },
+            {
+                id: 'webapp', group: 'apps', icon: 'bi-window-stack',
+                title: 'Web Application Development',
+                summary: 'SaaS platforms, dashboards and portals that run your business.',
+                description: 'Secure, scalable web applications for real operations: dashboards, internal tools and customer-facing platforms built with modern frameworks and a solid backend.',
+                features: ['SaaS platforms', 'Business management systems', 'Admin dashboards', 'CRM and ERP systems', 'Booking platforms', 'Customer portals'],
+                tech: ['React', 'Next.js', 'Django', 'JavaScript'],
+                examples: [{ label: 'TIAN web platform', url: TIAN.url }],
+            },
+            {
+                id: 'desktop', group: 'apps', icon: 'bi-display',
+                title: 'Desktop Software Development',
+                summary: 'Reliable desktop tools for Windows, macOS and Linux.',
+                description: 'Native-feeling desktop software for businesses that need speed and offline reliability, from inventory and billing to point-of-sale systems.',
+                features: ['Windows applications', 'macOS applications', 'Linux applications', 'Inventory management software', 'Billing and POS software', 'Offline business applications'],
+                tech: ['Flutter Desktop', 'Python', 'PySide6'],
+                examples: [],
+            },
+            {
+                id: 'website', group: 'apps', icon: 'bi-globe2',
+                title: 'Website Development',
+                summary: 'Premium, fast websites that turn visitors into customers.',
+                description: 'Modern, responsive websites that load fast, rank well and look premium on every screen, from a single landing page to a full e-commerce storefront.',
+                features: ['Corporate websites', 'Business websites', 'E-commerce websites', 'Landing pages', 'Portfolio websites', 'Educational websites'],
+                tech: ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js'],
+                examples: [{ label: 'TIAN Gold & Diamond website', url: TIAN.url }, PORTFOLIO],
+            },
+            {
+                id: 'ai', group: 'ai', icon: 'bi-robot', featured: true,
+                title: 'AI & Generative AI Development',
+                summary: 'Chatbots, RAG, agents and LLM features that do real work.',
+                description: 'I build AI that is genuinely useful inside a product: assistants grounded in your own data, agents that complete tasks, document and voice intelligence, and LLM features wired into your existing systems.',
+                features: ['AI chatbots', 'Retrieval-Augmented Generation (RAG)', 'AI agents', 'Document intelligence', 'Voice AI applications', 'LLM integrations', 'AI-powered business assistants'],
+                tech: ['Python', 'FastAPI', 'LLMs', 'LangChain', 'Embeddings', 'Vector Databases'],
+                examples: [{ label: '"Ask TIAN" AI shopping assistant', url: TIAN.url }, MEDIUM.multimodal, MEDIUM.agents],
+            },
+            {
+                id: 'backend', group: 'engineering', icon: 'bi-hdd-network',
+                title: 'Backend & API Development',
+                summary: 'Secure APIs, auth, payments and data that scale.',
+                description: 'The engine behind the product: well-designed APIs, authentication, databases, payments and real-time features, built to stay fast and secure as you grow.',
+                features: ['REST API development', 'Authentication systems', 'Database architecture', 'Payment integrations', 'Real-time applications', 'Third-party integrations', 'Scalable backend systems'],
+                tech: ['Python', 'Django', 'FastAPI', 'PostgreSQL', 'Redis'],
+                examples: [{ label: 'TIAN backend (Supabase)', url: TIAN.url }, MEDIUM.django],
+            },
+            {
+                id: 'automation', group: 'engineering', icon: 'bi-gear-wide-connected',
+                title: 'Automation Software',
+                summary: 'Automate repetitive work and connect your tools.',
+                description: 'Software that removes manual, repetitive work: scheduled jobs, connected APIs and intelligent workflows that run reliably in the background.',
+                features: ['Workflow automation', 'Business process automation', 'Task automation', 'Intelligent automation', 'Scheduled background jobs', 'API-based integrations'],
+                tech: ['Python', 'APIs', 'Celery', 'AI Agents'],
+                examples: [{ label: 'Weekly Medium sync for this site (GitHub Actions)', url: '#writing' }, MEDIUM.jobs],
+            },
+            {
+                id: 'iot', group: 'engineering', icon: 'bi-router',
+                title: 'IoT Applications',
+                summary: 'Apps and dashboards for connected devices.',
+                description: 'Apps and dashboards that talk to real hardware: live sensor data, device control and smart-home experiences over reliable real-time protocols.',
+                features: ['Smart device applications', 'Sensor data monitoring', 'Real-time device communication', 'Smart home applications', 'IoT dashboards', 'Connected-device control systems'],
+                tech: ['MQTT', 'Python', 'Flutter', 'REST APIs'],
+                examples: [],
+            },
+            {
+                id: 'data', group: 'engineering', icon: 'bi-graph-up-arrow',
+                title: 'Data Analytics & Machine Learning',
+                summary: 'Turn raw data into insight and predictions.',
+                description: 'From messy data to clear decisions: processing pipelines, predictive models and dashboards that show what is happening and what comes next.',
+                features: ['Data processing', 'Predictive analytics', 'Machine learning models', 'Data visualization', 'Classification and prediction systems', 'Business intelligence dashboards'],
+                tech: ['Python', 'Pandas', 'NumPy', 'Scikit-learn'],
+                examples: [MEDIUM.jobs],
+            },
+            {
+                id: 'devops', group: 'engineering', icon: 'bi-cloud-arrow-up',
+                title: 'Cloud & DevOps',
+                summary: 'Deploy, automate and keep products running.',
+                description: 'Getting software live and keeping it healthy: containers, automated pipelines, hosting and monitoring, so releases are routine instead of risky.',
+                features: ['Cloud deployment', 'Docker containerization', 'CI/CD pipelines', 'Server management', 'Application hosting', 'Infrastructure management', 'Monitoring and logging'],
+                tech: ['Docker', 'GitHub Actions', 'Linux', 'AWS'],
+                examples: [{ label: 'This portfolio: GitHub Pages + Actions', url: '#home' }],
+            },
+            {
+                id: 'extensions', group: 'engineering', icon: 'bi-puzzle',
+                title: 'Browser Extensions',
+                summary: 'Custom Chrome tools, scrapers and AI helpers.',
+                description: 'Browser extensions that save time where people already work: productivity tools, AI helpers, scrapers and custom integrations for Chrome and other browsers.',
+                features: ['Chrome extensions', 'Browser productivity tools', 'AI-powered browser extensions', 'Web scraping tools', 'Browser automation', 'Custom browser integrations'],
+                tech: ['JavaScript', 'TypeScript', 'Chrome APIs'],
+                examples: [],
+            },
+            {
+                id: 'uiux', group: 'design', icon: 'bi-vector-pen', wide: true,
+                title: 'UI/UX Design',
+                summary: 'Interfaces people understand and enjoy.',
+                description: 'Research-backed, beautiful interfaces: user flows, wireframes, interactive prototypes and design systems that make development faster and products easier to use.',
+                features: ['Mobile application design', 'Website design', 'SaaS dashboard design', 'Wireframing', 'Interactive prototyping', 'Design systems', 'Responsive interface design'],
+                tech: ['Figma', 'Design Systems', 'Prototyping'],
+                examples: [{ label: 'TIAN Gold & Diamond', url: TIAN.url }, PORTFOLIO],
+            },
+        ],
+    };
+})();

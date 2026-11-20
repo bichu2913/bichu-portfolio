@@ -1,0 +1,82 @@
+{
+  "articles": [
+    {
+      "title": "The Open AI Race Is Becoming an Efficiency Race",
+      "url": "https://medium.com/@bichuamz/the-open-ai-race-is-becoming-an-efficiency-race-40fe8525144d",
+      "date": "2026-10-06",
+      "tags": [
+        "developer-tools",
+        "ai-agent",
+        "ai"
+      ],
+      "image": "https://cdn-images-1.medium.com/max/1024/1*bkvkOXJrhNrwmXSTMDRSfg.png",
+      "summary": "For a while, the AI race seemed incredibly simple. Bigger model. More parameters. Higher benchmark score. Better model. But something important is changing. As…",
+      "minutes": 11
+    },
+    {
+      "title": "OpenAI DevDay 2026: AI Is Moving From Chatbots to Always-On Software Agents",
+      "url": "https://medium.com/@bichuamz/openai-devday-2026-ai-is-moving-from-chatbots-to-always-on-software-agents-197cd16d7b7b",
+      "date": "2026-09-30",
+      "tags": [
+        "ai",
+        "generative-ai-tools",
+        "chatgpt"
+      ],
+      "image": "https://cdn-images-1.medium.com/max/1024/1*y5H7TdvkMFmaK2RVwBal6w.png",
+      "summary": "OpenAI’s latest developer announcements point toward a different future for software: AI that doesn’t just answer questions, but works continuously, uses…",
+      "minutes": 8
+    },
+    {
+      "title": "The Daily Tech Brief",
+      "url": "https://medium.com/@bichuamz/the-daily-tech-brief-32acad2f12b3",
+      "date": "2026-09-24",
+      "tags": [
+        "developer-tools",
+        "artificial-intelligence",
+        "software-development"
+      ],
+      "image": "https://cdn-images-1.medium.com/max/1024/1*4MVtM4tDrScSXMtKHY0qWA.png",
+      "summary": "Three developments that show where software and AI are heading next AI is moving through another interesting transition. It is no longer just about chatbots…",
+      "minutes": 6
+    },
+    {
+      "title": "Multimodal AI for Developers: Build AI That Can See, Hear, Speak & Create",
+      "url": "https://medium.com/@bichuamz/multimodal-ai-for-developers-build-ai-that-can-see-hear-speak-create-957218294a4f",
+      "date": "2026-09-16",
+      "tags": [
+        "multimodal-ai",
+        "artificial-intelligence",
+        "generative-ai-tools"
+      ],
+      "image": "https://cdn-images-1.medium.com/max/1024/1*herVsFFHkLiMvq3k_8W2kQ.png",
+      "summary": "AI is no longer just a chatbot. Today’s AI systems can understand text, analyze images, listen to speech, generate images, create videos, and respond using…",
+      "minutes": 8
+    },
+    {
+      "title": "Building a Secure Multi-Step Registration Form with Django",
+      "url": "https://medium.com/@bichuamz/building-a-secure-multi-step-registration-form-with-django-a298c39f7b9f",
+      "date": "2026-09-10",
+      "tags": [
+        "web-development",
+        "cybersecurity",
+        "python"
+      ],
+      "image": "https://cdn-images-1.medium.com/max/1024/1*fdc81IWgSeOJz3OQKCkunQ.png",
+      "summary": "I recently built a secure multi-step registration form using Django, HTML, CSS, and JavaScript . The goal wasn’t simply to create a form that works. I wanted…",
+      "minutes": 2
+    },
+    {
+      "title": "Building a GenAI Job Market Analyzer: Scraping, Cleaning, and Analyzing Thousands of AI Job…",
+      "url": "https://medium.com/@bichuamz/building-a-genai-job-market-analyzer-scraping-cleaning-and-analyzing-thousands-of-ai-job-8f8b1eb8a16a",
+      "date": "2026-06-30",
+      "tags": [
+        "data-analysis",
+        "python-webscraping",
+        "pandas"
+      ],
+      "image": "https://cdn-images-1.medium.com/max/1024/1*tm5XOWMtpIk5OdEC2fT_Aw.png",
+      "summary": "The rapid growth of Generative AI has transformed the technology industry almost overnight. Every day, companies are urgently hiring AI Engineers, Machine…",
+      "minutes": 5
+    }
+  ]
+}

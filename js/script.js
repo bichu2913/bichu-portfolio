@@ -6,9 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     body.classList.add('is-loaded');
 
-    const EMAILJS_PUBLIC_KEY = 'X2vgsld4YW8gHp6GS';
-    const EMAILJS_SERVICE_ID = 'service_leiytfl';
-    const EMAILJS_TEMPLATE_ID = 'template_xwfeads';
+    const emailJsSettings = (window.SITE_CONFIG && window.SITE_CONFIG.emailjs) || {};
+    const EMAILJS_PUBLIC_KEY = emailJsSettings.publicKey || '';
+    const EMAILJS_SERVICE_ID = emailJsSettings.serviceId || '';
+    const EMAILJS_TEMPLATE_ID = emailJsSettings.templateId || '';
     const emailJsConfigured = ![
         EMAILJS_PUBLIC_KEY,
         EMAILJS_SERVICE_ID,
@@ -196,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+    }, { threshold: 0.05, rootMargin: '0px 0px -4% 0px' });
 
     function observeRevealTargets() {
         const targetSelectors = [
@@ -216,6 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
             '.process-step',
             '.timeline-item',
             '.project-card',
+            '.work-note',
             '.contact-card',
             '.contact-form',
             '.footer .row',
@@ -231,6 +233,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     observeRevealTargets();
+
+    // Safety net for fast flings: reveal anything already scrolled past, so nothing stays hidden.
+    let revealTicking = false;
+    window.addEventListener('scroll', () => {
+        if (revealTicking) return;
+        revealTicking = true;
+        requestAnimationFrame(() => {
+            revealTicking = false;
+            document.querySelectorAll('.reveal:not(.is-visible)').forEach((el) => {
+                if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-visible');
+            });
+        });
+    }, { passive: true });
 
     const timeline = document.querySelector('.timeline');
     if (timeline) {
