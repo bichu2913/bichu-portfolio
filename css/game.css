@@ -136,6 +136,20 @@ html, body {
 
 .intro.is-open { opacity: 1; visibility: visible; }
 
+/* on wide screens the card sits left so the car's front face shows on the right */
+@media (min-width: 901px) {
+    .intro {
+        place-items: center start;
+        padding-left: 6vw;
+        background: linear-gradient(90deg, rgba(5,6,8,0.85) 0%, rgba(5,6,8,0.55) 38%, rgba(5,6,8,0) 62%);
+        backdrop-filter: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .intro { place-items: end center; background: linear-gradient(0deg, rgba(5,6,8,0.92) 55%, rgba(5,6,8,0)); backdrop-filter: none; }
+}
+
 .intro-card {
     width: min(520px, 100%);
     padding: 34px;

@@ -66,7 +66,7 @@ export function createWorld(scene) {
 
     // painted drift circle in the middle
     const ring = new THREE.Mesh(
-        new THREE.RingGeometry(13.6, 14, 96),
+        new THREE.RingGeometry(13.8, 14, 96),
         new THREE.MeshBasicMaterial({ color: 0xd9b778, transparent: true, opacity: 0.6 }),
     );
     ring.rotation.x = -Math.PI / 2;

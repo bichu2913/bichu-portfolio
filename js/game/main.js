@@ -21,7 +21,7 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(62, 1, 0.1, 600);
 
 const { moon, cones } = createWorld(scene);
-const { car, body, wheels, tailMat, under } = createCar();
+const { car, body, wheels, tailMat, under } = createCar(renderer);
 scene.add(car);
 const skids = createSkids(scene);
 const smoke = createSmoke(scene);
@@ -111,6 +111,10 @@ function step(dt) {
 
 /* ---------- Visual sync (once per rendered frame) ---------- */
 const camPos = new THREE.Vector3(START.x, 4, START.z - 9);
+let camMode = 'showcase'; // 'showcase' → 'swing' → 'chase'
+let showcaseTime = 0;
+let swingT = 0;
+let swingFrom = 0;
 const camLook = new THREE.Vector3();
 const tmp = new THREE.Vector3();
 
@@ -140,10 +144,46 @@ function syncVisuals(dt, frameDt) {
     }
     smoke.update(frameDt);
 
-    // chase camera: swings toward the direction of travel during drifts
     const fx = Math.sin(vehicle.heading);
     const fz = Math.cos(vehicle.heading);
     const sp = vehicle.speed;
+
+    // showcase (start screen) and the swing into the chase view
+    showcaseTime += frameDt;
+    if (camMode !== 'chase') {
+        let angle;
+        let radius;
+        let height;
+        if (camMode === 'showcase') {
+            angle = Math.sin(showcaseTime * 0.35) * 0.75;   // sway around the front of the car
+            radius = 6.4;
+            height = 1.25;
+        } else {
+            swingT = Math.min(1, swingT + frameDt / 1.4);
+            const e = swingT < 0.5 ? 4 * swingT ** 3 : 1 - (-2 * swingT + 2) ** 3 / 2; // ease in-out
+            angle = swingFrom + (Math.PI * Math.sign(swingFrom || 1) - swingFrom) * e;
+            radius = 6.4 + (8 - 6.4) * e;
+            height = 1.25 + (3.3 - 1.25) * e;
+            if (swingT >= 1) camMode = 'chase';
+        }
+        const a = vehicle.heading + angle;
+        camPos.set(vehicle.x + Math.sin(a) * radius, height, vehicle.z + Math.cos(a) * radius);
+        camera.position.copy(camPos);
+        camLook.set(vehicle.x, 0.62, vehicle.z);
+        if (camMode === 'showcase' && innerWidth > 900) {
+            // frame the car to the right of the start card
+            const dx = camLook.x - camPos.x;
+            const dz = camLook.z - camPos.z;
+            const l = Math.hypot(dx, dz);
+            camLook.x += (dz / l) * 1.5;
+            camLook.z -= (dx / l) * 1.5;
+        }
+        camera.lookAt(camLook);
+        if (camera.fov !== 50 && camMode === 'showcase') { camera.fov = 50; camera.updateProjectionMatrix(); }
+    }
+
+    // chase camera: swings toward the direction of travel during drifts
+    if (camMode === 'chase') {
     let dx = fx;
     let dz = fz;
     if (sp > 3 && vehicle.forwardSpeed > 0) {
@@ -165,7 +205,8 @@ function syncVisuals(dt, frameDt) {
     }
     camLook.set(vehicle.x + fx * 3, 0.9, vehicle.z + fz * 3);
     camera.lookAt(camLook);
-    const fov = 60 + Math.min(16, sp * 0.35);
+    }
+    const fov = camMode === 'showcase' ? 50 : 60 + Math.min(16, sp * 0.35);
     if (Math.abs(camera.fov - fov) > 0.05) { camera.fov += (fov - camera.fov) * Math.min(1, 3 * frameDt); camera.updateProjectionMatrix(); }
 
     // shadows follow the car
@@ -239,6 +280,11 @@ function toggleSound() { audio.toggle(); setSoundIcon(); }
 setSoundIcon();
 
 const begin = () => {
+    if (camMode === 'showcase') {
+        swingFrom = Math.sin(showcaseTime * 0.35) * 0.75;
+        swingT = 0;
+        camMode = 'swing';
+    }
     intro.classList.remove('is-open');
     audio.start();
     audio.resume();
