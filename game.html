@@ -52,22 +52,69 @@
     </div>
 </div>
 
-<!-- Start / help overlay -->
+<!-- Start menu -->
 <div class="intro is-open" role="dialog" aria-labelledby="intro-title">
     <div class="intro-card">
-        <div class="intro-kicker">STEP 1 · DRIVING PROTOTYPE</div>
+        <div class="intro-kicker">A NIGHT DRIFT GAME</div>
         <h1 id="intro-title">BICHU <span>DRIFT</span></h1>
-        <p class="intro-sub">Hold the handbrake while turning to break traction, then counter-steer to hold the slide. Chain drifts to build your combo.</p>
-        <div class="intro-keys">
-            <div><kbd>W</kbd><kbd>↑</kbd><span>Throttle</span></div>
-            <div><kbd>S</kbd><kbd>↓</kbd><span>Brake / reverse</span></div>
-            <div><kbd>A</kbd><kbd>D</kbd><span>Steer</span></div>
-            <div><kbd class="wide">Space</kbd><span>Handbrake (drift)</span></div>
-            <div><kbd>R</kbd><span>Reset car</span></div>
-            <div><kbd>M</kbd><span>Sound on/off</span></div>
+        <p class="intro-sub">Tap the handbrake while turning to break traction, then counter-steer to hold the slide. Chain drifts for a bigger combo.</p>
+
+        <div class="intro-modes">
+            <button type="button" class="mode mode-attack" data-mode="attack" disabled>
+                <i class="bi bi-stopwatch"></i>
+                <span><strong>Score Attack</strong><small>60 seconds · global leaderboard</small></span>
+            </button>
+            <button type="button" class="mode" data-mode="free" disabled>
+                <i class="bi bi-infinity"></i>
+                <span><strong>Free Drift</strong><small>No timer, just drive</small></span>
+            </button>
         </div>
-        <p class="intro-pad"><i class="bi bi-controller"></i> Gamepads work too: RT throttle, LT brake, A handbrake.</p>
-        <button type="button" class="intro-start" data-action="start"><span class="intro-loading">Loading…</span><span class="intro-ready">Start driving <i class="bi bi-arrow-right"></i></span></button>
+
+        <div class="intro-tabs" role="tablist">
+            <button type="button" role="tab" aria-selected="true" data-tab="board"><i class="bi bi-trophy"></i> Leaderboard</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="keys"><i class="bi bi-keyboard"></i> Controls</button>
+        </div>
+        <div class="intro-pane" data-pane="board">
+            <ol class="board-list" aria-live="polite"><li class="board-empty">Loading…</li></ol>
+        </div>
+        <div class="intro-pane" data-pane="keys" hidden>
+            <div class="intro-keys">
+                <div><kbd>W</kbd><kbd>↑</kbd><span>Throttle</span></div>
+                <div><kbd>S</kbd><kbd>↓</kbd><span>Brake / reverse</span></div>
+                <div><kbd>A</kbd><kbd>D</kbd><span>Steer</span></div>
+                <div><kbd class="wide">Space</kbd><span>Handbrake</span></div>
+                <div><kbd>R</kbd><span>Reset car</span></div>
+                <div><kbd>Esc</kbd><span>Pause / menu</span></div>
+            </div>
+            <p class="intro-pad"><i class="bi bi-controller"></i> Gamepad: RT throttle, LT brake, A handbrake.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Countdown + timer -->
+<div class="countdown" aria-live="assertive"></div>
+<div class="hud-timer" hidden><i class="bi bi-stopwatch"></i> <span>60.0</span></div>
+
+<!-- Results -->
+<div class="results" role="dialog" aria-labelledby="results-title">
+    <div class="results-card">
+        <div class="intro-kicker">TIME UP</div>
+        <h2 id="results-title" class="results-score">0</h2>
+        <p class="results-sub"><span class="results-best"></span></p>
+        <form class="results-form" novalidate>
+            <label for="player-name">Put your name on the global leaderboard</label>
+            <div class="results-row">
+                <input id="player-name" name="name" type="text" maxlength="16" autocomplete="nickname" placeholder="Your name" required>
+                <button type="submit" class="btn-gold">Submit</button>
+            </div>
+            <p class="results-status" role="status"></p>
+        </form>
+        <ol class="board-list results-board" aria-live="polite"></ol>
+        <div class="results-actions">
+            <button type="button" class="btn-gold" data-action="retry"><i class="bi bi-arrow-repeat"></i> Race again</button>
+            <button type="button" class="btn-ghost" data-action="menu">Menu</button>
+            <a class="btn-ghost" href="index.html#idea">Hire the developer <i class="bi bi-arrow-up-right"></i></a>
+        </div>
     </div>
 </div>
 

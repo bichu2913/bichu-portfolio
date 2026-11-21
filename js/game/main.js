@@ -1,4 +1,4 @@
-// Bichu Drift — step 1: driving prototype.
+// Bichu Drift — free drift + 60-second score attack with a global leaderboard.
 // Fixed-timestep physics, chase camera, drift scoring with combos, tyre marks, smoke, sound.
 import * as THREE from 'three';
 import { Vehicle } from './vehicle.js';
@@ -7,6 +7,8 @@ import { createWorld, ARENA } from './world.js';
 import { createSkids, createSmoke } from './effects.js';
 import { createInput } from './input.js';
 import { createAudio } from './audio.js';
+import { createTrack, collideIslands } from './track.js';
+import { leaderboard, cleanName } from './leaderboard.js';
 
 const canvas = document.getElementById('game');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
@@ -21,6 +23,7 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(62, 1, 0.1, 600);
 
 const { moon, cones } = createWorld(scene);
+createTrack(scene);
 const { car, body, wheels, tailMat, under } = createCar(renderer);
 scene.add(car);
 const skids = createSkids(scene);
@@ -60,7 +63,7 @@ hud.best.textContent = score.best.toLocaleString();
 const bank = () => {
     if (score.run < 1) return;
     score.total += Math.round(score.run);
-    if (score.total > score.best) {
+    if (game.mode === 'attack' && score.total > score.best) {
         score.best = score.total;
         try { localStorage.setItem('drift-best', String(score.best)); } catch { /* storage blocked */ }
     }
@@ -83,8 +86,12 @@ const lose = () => {
 let shake = 0;
 const wheelWorld = new THREE.Vector3();
 
+const NO_INPUT = { throttle: 0, brake: 0, steer: 0, handbrake: false };
+const COAST = { throttle: 0, brake: 0.25, steer: 0, handbrake: false };
+
 function step(dt) {
-    vehicle.update(dt, input.state);
+    const controls = game.phase === 'playing' ? input.state : game.phase === 'results' ? COAST : NO_INPUT;
+    vehicle.update(dt, controls);
 
     // arena walls
     const limit = ARENA - 1.2;
@@ -93,6 +100,7 @@ function step(dt) {
     if (vehicle.x < -limit) { vehicle.x = -limit; impact = Math.max(impact, vehicle.collide(1, 0)); }
     if (vehicle.z > limit) { vehicle.z = limit; impact = Math.max(impact, vehicle.collide(0, -1)); }
     if (vehicle.z < -limit) { vehicle.z = -limit; impact = Math.max(impact, vehicle.collide(0, 1)); }
+    impact = Math.max(impact, collideIslands(vehicle));
     if (impact > 4) { shake = Math.min(1, impact / 20); lose(); }
 
     cones.update(dt, vehicle);
@@ -233,7 +241,6 @@ function syncVisuals(dt, frameDt) {
 const STEP = 1 / 120;
 let acc = 0;
 let last = performance.now();
-let running = false;
 
 function frame(now) {
     requestAnimationFrame(frame);
@@ -241,15 +248,22 @@ function frame(now) {
     last = now;
 
     input.poll();
-    if (running) {
-        if (input.consume('r')) {
+    if (game.phase !== 'menu') {
+        if (game.phase === 'playing' && input.consume('r')) {
             vehicle.reset(START.x, START.z, START.heading);
             skids.clear();
             lose();
         }
         if (input.consume('m')) toggleSound();
+        if (input.consume('escape') && game.phase === 'playing') openMenu();
         acc += frameDt;
         while (acc >= STEP) { step(STEP); acc -= STEP; }
+        if (game.phase === 'playing' && game.mode === 'attack') {
+            game.timeLeft = (game.endsAt - performance.now()) / 1000; // real clock, even on slow devices
+            ui.timerVal.textContent = Math.max(0, game.timeLeft).toFixed(1);
+            ui.timer.classList.toggle('is-low', game.timeLeft < 10);
+            if (game.timeLeft <= 0) endAttack();
+        }
     }
     input.endFrame();
     syncVisuals(STEP, frameDt);
@@ -267,46 +281,194 @@ addEventListener('resize', resize);
 resize();
 requestAnimationFrame(frame);
 
-/* ---------- UI ---------- */
-const intro = $('.intro');
-const startBtn = $('[data-action="start"]');
-const soundBtn = $('[data-action="sound"]');
+/* ---------- Game flow ---------- */
+const ATTACK_SECONDS = 60;
+const game = { mode: 'free', phase: 'menu', timeLeft: ATTACK_SECONDS, endsAt: 0 };
+
+const ui = {
+    intro: $('.intro'),
+    modes: [...document.querySelectorAll('[data-mode]')],
+    tabs: [...document.querySelectorAll('.intro-tabs [data-tab]')],
+    menuBoard: $('.intro .board-list'),
+    timer: $('.hud-timer'),
+    timerVal: $('.hud-timer span'),
+    countdown: $('.countdown'),
+    results: $('.results'),
+    resScore: $('.results-score'),
+    resBest: $('.results-best'),
+    resForm: $('.results-form'),
+    resName: $('#player-name'),
+    resStatus: $('.results-status'),
+    resBoard: $('.results-board'),
+    sound: $('[data-action="sound"]'),
+};
 
 const setSoundIcon = () => {
-    soundBtn.classList.toggle('is-off', audio.muted);
-    soundBtn.querySelector('i').className = `bi ${audio.muted ? 'bi-volume-mute-fill' : 'bi-volume-up-fill'}`;
+    ui.sound.classList.toggle('is-off', audio.muted);
+    ui.sound.querySelector('i').className = `bi ${audio.muted ? 'bi-volume-mute-fill' : 'bi-volume-up-fill'}`;
 };
 function toggleSound() { audio.toggle(); setSoundIcon(); }
 setSoundIcon();
+ui.sound.addEventListener('click', toggleSound);
 
-const begin = () => {
+// ---- leaderboard rendering
+const renderBoard = (list, rows, highlight) => {
+    if (!rows.length) {
+        list.innerHTML = '<li class="board-empty">No scores yet. Be the first!</li>';
+        return;
+    }
+    list.replaceChildren(...rows.map((r) => {
+        const li = document.createElement('li');
+        const name = document.createElement('span');
+        name.textContent = r.name;
+        const pts = document.createElement('b');
+        pts.textContent = r.score.toLocaleString();
+        li.append(name, pts);
+        if (highlight && r.name === highlight.name && r.score === highlight.score) li.classList.add('is-you');
+        return li;
+    }));
+};
+const loadBoard = async (list, highlight) => {
+    try {
+        renderBoard(list, await leaderboard.top(10), highlight);
+    } catch {
+        list.innerHTML = '<li class="board-empty">Leaderboard is offline right now.</li>';
+    }
+};
+loadBoard(ui.menuBoard);
+
+ui.tabs.forEach((tab) => tab.addEventListener('click', () => {
+    ui.tabs.forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
+    document.querySelectorAll('.intro-pane').forEach((p) => { p.hidden = p.dataset.pane !== tab.dataset.tab; });
+}));
+
+// ---- starting a run
+const swingToChase = () => {
     if (camMode === 'showcase') {
         swingFrom = Math.sin(showcaseTime * 0.35) * 0.75;
         swingT = 0;
         camMode = 'swing';
     }
-    intro.classList.remove('is-open');
-    audio.start();
-    audio.resume();
-    running = true;
+};
+
+const resetRun = () => {
+    vehicle.reset(START.x, START.z, START.heading);
+    skids.clear();
+    Object.assign(score, { total: 0, run: 0, combo: 1, idle: 0 });
+    hud.drift.classList.remove('is-on', 'is-lost', 'is-banked');
     last = performance.now();
     acc = 0;
-    canvas.focus?.();
 };
-startBtn.addEventListener('click', begin);
-soundBtn.addEventListener('click', toggleSound);
-$('[data-action="help"]').addEventListener('click', () => {
-    running = false;
-    audio.suspend();
-    intro.classList.add('is-open');
-});
-addEventListener('keydown', (e) => {
-    if (intro.classList.contains('is-open') && (e.key === 'Enter' || e.key === ' ') && startBtn.classList.contains('is-ready')) {
-        e.preventDefault();
-        begin();
+
+function startMode(mode) {
+    game.mode = mode;
+    ui.intro.classList.remove('is-open');
+    ui.results.classList.remove('is-open');
+    audio.start();
+    audio.resume();
+    swingToChase();
+    resetRun();
+    ui.timer.hidden = mode !== 'attack';
+    if (mode === 'attack') {
+        game.timeLeft = ATTACK_SECONDS;
+        ui.timerVal.textContent = ATTACK_SECONDS.toFixed(1);
+        ui.timer.classList.remove('is-low');
+        runCountdown();
+    } else {
+        game.phase = 'playing';
+    }
+}
+
+let countdownTimers = [];
+function runCountdown() {
+    game.phase = 'countdown';
+    countdownTimers.forEach(clearTimeout);
+    countdownTimers = ['3', '2', '1', 'GO'].map((label, i) => setTimeout(() => {
+        if (game.phase !== 'countdown') return;
+        ui.countdown.innerHTML = `<span>${label}</span>`;
+        if (label === 'GO') {
+            game.phase = 'playing';
+            game.endsAt = performance.now() + ATTACK_SECONDS * 1000;
+            setTimeout(() => { ui.countdown.innerHTML = ''; }, 700);
+        }
+    }, 600 + i * 800)); // the first beat waits for the camera swing
+}
+
+function endAttack() {
+    bank();
+    game.phase = 'results';
+    ui.timer.hidden = true;
+    const final = score.total;
+    const isBest = final > 0 && final >= score.best;
+    ui.resScore.textContent = final.toLocaleString();
+    ui.resBest.innerHTML = isBest ? '<b>New personal best!</b>' : `Personal best <b>${score.best.toLocaleString()}</b>`;
+    ui.resForm.classList.toggle('is-done', final < 1);
+    ui.resForm.querySelector('button').disabled = false;
+    ui.resStatus.textContent = final < 1 ? 'Drift to score points next time!' : '';
+    ui.resStatus.className = 'results-status';
+    try { ui.resName.value = localStorage.getItem('drift-name') || ''; } catch { /* storage blocked */ }
+    ui.resBoard.innerHTML = '';
+    loadBoard(ui.resBoard);
+    setTimeout(() => {
+        ui.results.classList.add('is-open');
+        if (final > 0) ui.resName.focus({ preventScroll: true });
+    }, 900);
+}
+
+ui.resForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = cleanName(ui.resName.value);
+    if (name.length < 2) {
+        ui.resStatus.textContent = 'Use 2–16 letters or numbers.';
+        ui.resStatus.className = 'results-status is-err';
+        return;
+    }
+    const btn = ui.resForm.querySelector('button');
+    btn.disabled = true;
+    ui.resStatus.textContent = 'Submitting…';
+    ui.resStatus.className = 'results-status';
+    try {
+        const rank = await leaderboard.submit(name, score.total);
+        try { localStorage.setItem('drift-name', name); } catch { /* storage blocked */ }
+        ui.resForm.classList.add('is-done');
+        ui.resStatus.textContent = rank <= 10 ? `You're #${rank} on the leaderboard!` : `Saved. You're #${rank} worldwide.`;
+        ui.resStatus.className = 'results-status is-ok';
+        await loadBoard(ui.resBoard, { name, score: score.total });
+        loadBoard(ui.menuBoard);
+    } catch (err) {
+        btn.disabled = false;
+        ui.resStatus.textContent = String(err.message).includes('too many') ? 'Leaderboard is busy, try again in a minute.' : 'Could not submit right now. Try again.';
+        ui.resStatus.className = 'results-status is-err';
     }
 });
-document.addEventListener('visibilitychange', () => { if (document.hidden) audio.suspend(); else if (running) audio.resume(); });
+
+function openMenu() {
+    game.phase = 'menu';
+    countdownTimers.forEach(clearTimeout);
+    ui.timer.hidden = true;
+    ui.countdown.innerHTML = '';
+    ui.results.classList.remove('is-open');
+    ui.intro.classList.add('is-open');
+    audio.suspend();
+    loadBoard(ui.menuBoard);
+}
+
+ui.modes.forEach((b) => b.addEventListener('click', () => startMode(b.dataset.mode)));
+$('[data-action="retry"]').addEventListener('click', () => startMode('attack'));
+$('[data-action="menu"]').addEventListener('click', openMenu);
+$('[data-action="help"]').addEventListener('click', openMenu);
+addEventListener('keydown', (e) => {
+    if (ui.intro.classList.contains('is-open') && e.key === 'Enter' && !ui.modes[0].disabled) {
+        e.preventDefault();
+        startMode('attack');
+    }
+});
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        audio.suspend();
+        if (game.phase === 'playing' && game.mode === 'free') openMenu();
+    } else if (game.phase !== 'menu') audio.resume();
+});
 
 // Warm up: compile every material (including the hidden smoke and empty skid layer) before
 // the first drift, so there is no stutter the first time effects appear.
@@ -316,10 +478,7 @@ renderer.compile(scene, camera);
 renderer.render(scene, camera);
 smoke.sprites.forEach((s) => { s.visible = false; });
 skids.mesh.count = 0;
-requestAnimationFrame(() => {
-    startBtn.classList.add('is-ready');
-    startBtn.disabled = false;
-});
+requestAnimationFrame(() => ui.modes.forEach((b) => { b.disabled = false; }));
 
 // expose for automated testing only
-window.__drift = { vehicle, score, input };
+window.__drift = { vehicle, score, input, game };
