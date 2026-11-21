@@ -1,4 +1,4 @@
-// Bichu Drift — free drift + 60-second score attack with a global leaderboard.
+// Bichu Drift — free drift + a walled 2-lap drift race (Score Attack) with a global leaderboard.
 // Fixed-timestep physics, chase camera, drift scoring with combos, tyre marks, smoke, sound.
 import * as THREE from 'three';
 import { Vehicle } from './vehicle.js';
@@ -7,7 +7,7 @@ import { createWorld, ARENA } from './world.js';
 import { createSkids, createSmoke } from './effects.js';
 import { createInput } from './input.js';
 import { createAudio } from './audio.js';
-import { createTrack, collideIslands } from './track.js';
+import { createTrack, collideIslands, createRaceCourse, collideWalls, startPose, trackSample, SAMPLE_COUNT } from './track.js';
 import { leaderboard, cleanName } from './leaderboard.js';
 
 const canvas = document.getElementById('game');
@@ -24,6 +24,7 @@ const camera = new THREE.PerspectiveCamera(62, 1, 0.1, 600);
 
 const { moon, cones } = createWorld(scene);
 createTrack(scene);
+const raceCourse = createRaceCourse(scene);
 const { car, body, wheels, tailMat, under } = createCar(renderer);
 scene.add(car);
 const skids = createSkids(scene);
@@ -86,6 +87,10 @@ const lose = () => {
 let shake = 0;
 const wheelWorld = new THREE.Vector3();
 
+const LAPS = 2;
+const RACE_LIMIT = 180; // seconds, so nobody can crawl around farming points
+const race = { idx: 0, dist: 0, lap: 1, wrong: 0, startedAt: 0, time: 0, finished: false };
+
 const NO_INPUT = { throttle: 0, brake: 0, steer: 0, handbrake: false };
 const COAST = { throttle: 0, brake: 0.25, steer: 0, handbrake: false };
 
@@ -101,6 +106,24 @@ function step(dt) {
     if (vehicle.z > limit) { vehicle.z = limit; impact = Math.max(impact, vehicle.collide(0, -1)); }
     if (vehicle.z < -limit) { vehicle.z = -limit; impact = Math.max(impact, vehicle.collide(0, 1)); }
     impact = Math.max(impact, collideIslands(vehicle));
+    if (game.mode === 'attack') {
+        const wall = collideWalls(vehicle, race.idx);
+        impact = Math.max(impact, wall.impact);
+        // progress along the loop (in samples); going backwards subtracts, so shortcuts never pay
+        let delta = wall.index - race.idx;
+        if (delta > SAMPLE_COUNT / 2) delta -= SAMPLE_COUNT;
+        if (delta < -SAMPLE_COUNT / 2) delta += SAMPLE_COUNT;
+        race.idx = wall.index;
+        if (game.phase === 'playing') {
+            race.dist += delta;
+            // wrong way = moving against the track direction (not just crossing a sample backwards)
+            const t = trackSample(wall.index);
+            const along = vehicle.vx * t.tx + vehicle.vz * t.tz;
+            race.wrong = along < -3 ? race.wrong + dt : Math.max(0, race.wrong - dt * 2);
+            race.lap = Math.min(LAPS, Math.floor(Math.max(0, race.dist) / SAMPLE_COUNT) + 1);
+            if (race.dist >= SAMPLE_COUNT * LAPS && !race.finished) { race.finished = true; finishRace(); }
+        }
+    }
     if (impact > 4) { shake = Math.min(1, impact / 20); lose(); }
 
     cones.update(dt, vehicle);
@@ -250,7 +273,11 @@ function frame(now) {
     input.poll();
     if (game.phase !== 'menu') {
         if (game.phase === 'playing' && input.consume('r')) {
-            vehicle.reset(START.x, START.z, START.heading);
+            if (game.mode === 'attack') {
+                respawnOnTrack(race.idx); // back on the centre line, facing the right way
+            } else {
+                vehicle.reset(START.x, START.z, START.heading);
+            }
             skids.clear();
             lose();
         }
@@ -259,10 +286,12 @@ function frame(now) {
         acc += frameDt;
         while (acc >= STEP) { step(STEP); acc -= STEP; }
         if (game.phase === 'playing' && game.mode === 'attack') {
-            game.timeLeft = (game.endsAt - performance.now()) / 1000; // real clock, even on slow devices
-            ui.timerVal.textContent = Math.max(0, game.timeLeft).toFixed(1);
-            ui.timer.classList.toggle('is-low', game.timeLeft < 10);
-            if (game.timeLeft <= 0) endAttack();
+            race.time = (performance.now() - race.startedAt) / 1000; // real clock, even on slow devices
+            const left = RACE_LIMIT - race.time;
+            ui.timerVal.textContent = `LAP ${race.lap}/${LAPS} · ${formatTime(race.time)}`;
+            ui.timer.classList.toggle('is-low', left < 15);
+            ui.warning.classList.toggle('is-on', race.wrong > 0.6);
+            if (left <= 0 && !race.finished) { race.finished = true; finishRace(true); }
         }
     }
     input.endFrame();
@@ -282,8 +311,8 @@ resize();
 requestAnimationFrame(frame);
 
 /* ---------- Game flow ---------- */
-const ATTACK_SECONDS = 60;
-const game = { mode: 'free', phase: 'menu', timeLeft: ATTACK_SECONDS, endsAt: 0 };
+const game = { mode: 'free', phase: 'menu' };
+const formatTime = (t) => `${Math.floor(t / 60)}:${(t % 60).toFixed(1).padStart(4, '0')}`;
 
 const ui = {
     intro: $('.intro'),
@@ -293,6 +322,8 @@ const ui = {
     timer: $('.hud-timer'),
     timerVal: $('.hud-timer span'),
     countdown: $('.countdown'),
+    warning: $('.hud-warning'),
+    resKicker: $('.results .intro-kicker'),
     results: $('.results'),
     resScore: $('.results-score'),
     resBest: $('.results-best'),
@@ -351,8 +382,21 @@ const swingToChase = () => {
     }
 };
 
+function respawnOnTrack(index) {
+    const s = trackSample(index);
+    vehicle.reset(s.x, s.z, Math.atan2(s.tx, s.tz));
+}
+
 const resetRun = () => {
-    vehicle.reset(START.x, START.z, START.heading);
+    if (game.mode === 'attack') {
+        const sp = startPose();
+        vehicle.reset(sp.x, sp.z, sp.heading);
+        Object.assign(race, { idx: SAMPLE_COUNT - 8, dist: -8, lap: 1, wrong: 0, time: 0, finished: false });
+    } else {
+        vehicle.reset(START.x, START.z, START.heading);
+    }
+    raceCourse.setVisible(game.mode === 'attack');
+    ui.warning.classList.remove('is-on');
     skids.clear();
     Object.assign(score, { total: 0, run: 0, combo: 1, idle: 0 });
     hud.drift.classList.remove('is-on', 'is-lost', 'is-banked');
@@ -370,8 +414,7 @@ function startMode(mode) {
     resetRun();
     ui.timer.hidden = mode !== 'attack';
     if (mode === 'attack') {
-        game.timeLeft = ATTACK_SECONDS;
-        ui.timerVal.textContent = ATTACK_SECONDS.toFixed(1);
+        ui.timerVal.textContent = `LAP 1/${LAPS} · 0:00.0`;
         ui.timer.classList.remove('is-low');
         runCountdown();
     } else {
@@ -388,16 +431,18 @@ function runCountdown() {
         ui.countdown.innerHTML = `<span>${label}</span>`;
         if (label === 'GO') {
             game.phase = 'playing';
-            game.endsAt = performance.now() + ATTACK_SECONDS * 1000;
+            race.startedAt = performance.now();
             setTimeout(() => { ui.countdown.innerHTML = ''; }, 700);
         }
     }, 600 + i * 800)); // the first beat waits for the camera swing
 }
 
-function endAttack() {
+function finishRace(timedOut = false) {
     bank();
     game.phase = 'results';
     ui.timer.hidden = true;
+    ui.warning.classList.remove('is-on');
+    ui.resKicker.textContent = timedOut ? `TIME LIMIT · ${formatTime(race.time)}` : `FINISH · ${LAPS} LAPS IN ${formatTime(race.time)}`;
     const final = score.total;
     const isBest = final > 0 && final >= score.best;
     ui.resScore.textContent = final.toLocaleString();
@@ -481,4 +526,4 @@ skids.mesh.count = 0;
 requestAnimationFrame(() => ui.modes.forEach((b) => { b.disabled = false; }));
 
 // expose for automated testing only
-window.__drift = { vehicle, score, input, game };
+window.__drift = { vehicle, score, input, game, race, camera, getCamMode: () => camMode };

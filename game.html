@@ -62,7 +62,7 @@
         <div class="intro-modes">
             <button type="button" class="mode mode-attack" data-mode="attack" disabled>
                 <i class="bi bi-stopwatch"></i>
-                <span><strong>Score Attack</strong><small>60 seconds · global leaderboard</small></span>
+                <span><strong>Score Attack</strong><small>2-lap drift race · global leaderboard</small></span>
             </button>
             <button type="button" class="mode" data-mode="free" disabled>
                 <i class="bi bi-infinity"></i>
@@ -93,12 +93,13 @@
 
 <!-- Countdown + timer -->
 <div class="countdown" aria-live="assertive"></div>
-<div class="hud-timer" hidden><i class="bi bi-stopwatch"></i> <span>60.0</span></div>
+<div class="hud-timer" hidden><i class="bi bi-flag-fill"></i> <span>LAP 1/2 · 0:00.0</span></div>
+<div class="hud-warning" aria-live="assertive"><i class="bi bi-exclamation-triangle-fill"></i> WRONG WAY</div>
 
 <!-- Results -->
 <div class="results" role="dialog" aria-labelledby="results-title">
     <div class="results-card">
-        <div class="intro-kicker">TIME UP</div>
+        <div class="intro-kicker">FINISH</div>
         <h2 id="results-title" class="results-score">0</h2>
         <p class="results-sub"><span class="results-best"></span></p>
         <form class="results-form" novalidate>
