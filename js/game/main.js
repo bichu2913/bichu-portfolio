@@ -11,9 +11,12 @@ import { createTrack, collideIslands, createRaceCourse, collideWalls, startPose,
 import { leaderboard, cleanName } from './leaderboard.js';
 
 const canvas = document.getElementById('game');
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
+// Quality: phones and low-core devices start lighter; anything that still runs slowly steps down at runtime.
+const LOW_END = matchMedia('(pointer: coarse)').matches || (navigator.hardwareConcurrency || 8) <= 4;
+const quality = { ratio: Math.min(devicePixelRatio, LOW_END ? 1.25 : 2), shadows: !LOW_END, smoke: LOW_END ? 0.25 : 0.55 };
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: !LOW_END, powerPreference: 'high-performance' });
+renderer.setPixelRatio(quality.ratio);
+renderer.shadowMap.enabled = quality.shadows;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.25;
@@ -171,7 +174,7 @@ function syncVisuals(dt, frameDt) {
         if (w.front) continue;
         wheelWorld.set(w.x, 0, w.z).applyAxisAngle(THREE.Object3D.DEFAULT_UP, vehicle.heading).add(car.position);
         skids.mark(i, wheelWorld.x, wheelWorld.z, sliding);
-        if (vehicle.drifting && Math.random() < 0.55) smoke.emit(wheelWorld.x, wheelWorld.z, vehicle.vx, vehicle.vz, driftAmount);
+        if (vehicle.drifting && Math.random() < quality.smoke) smoke.emit(wheelWorld.x, wheelWorld.z, vehicle.vx, vehicle.vz, driftAmount);
     }
     smoke.update(frameDt);
 
@@ -225,8 +228,9 @@ function syncVisuals(dt, frameDt) {
         const l = Math.hypot(dx, dz);
         dx /= l; dz /= l;
     }
-    const back = 7.5 + Math.min(2.5, sp * 0.05);
-    tmp.set(vehicle.x - dx * back, 3.1 + Math.min(1.2, sp * 0.02), vehicle.z - dz * back);
+    const tall = camera.aspect < 1 ? 1.6 : 1; // portrait screens: pull back so the car isn't huge
+    const back = (7.5 + Math.min(2.5, sp * 0.05)) * tall;
+    tmp.set(vehicle.x - dx * back, (3.1 + Math.min(1.2, sp * 0.02)) * (tall > 1 ? 1.35 : 1), vehicle.z - dz * back);
     camPos.lerp(tmp, 1 - Math.exp(-6 * frameDt));
     camera.position.copy(camPos);
     if (shake > 0) {
@@ -265,10 +269,34 @@ const STEP = 1 / 120;
 let acc = 0;
 let last = performance.now();
 
+const perf = { frames: 0, time: 0, steps: 0 };
+function adaptQuality(frameDt) {
+    if (game.phase !== 'playing' || perf.steps >= 2) return;
+    perf.frames++;
+    perf.time += frameDt;
+    if (perf.time < 3) return;
+    const fps = perf.frames / perf.time;
+    perf.frames = 0;
+    perf.time = 0;
+    if (fps >= 45) return;
+    perf.steps++;
+    if (perf.steps === 1) {
+        quality.ratio = Math.max(1, quality.ratio * 0.75);
+        renderer.setPixelRatio(quality.ratio);
+        resize();
+    } else {
+        quality.shadows = false;
+        quality.smoke = 0.2;
+        renderer.shadowMap.enabled = false;
+        scene.traverse((o) => { if (o.material) o.material.needsUpdate = true; });
+    }
+}
+
 function frame(now) {
     requestAnimationFrame(frame);
     const frameDt = Math.min(0.1, (now - last) / 1000);
     last = now;
+    adaptQuality(frameDt);
 
     input.poll();
     if (game.phase !== 'menu') {
@@ -406,6 +434,7 @@ const resetRun = () => {
 
 function startMode(mode) {
     game.mode = mode;
+    document.body.classList.remove('is-menu');
     ui.intro.classList.remove('is-open');
     ui.results.classList.remove('is-open');
     audio.start();
@@ -455,6 +484,7 @@ function finishRace(timedOut = false) {
     ui.resBoard.innerHTML = '';
     loadBoard(ui.resBoard);
     setTimeout(() => {
+        document.body.classList.add('is-menu');
         ui.results.classList.add('is-open');
         if (final > 0) ui.resName.focus({ preventScroll: true });
     }, 900);
@@ -489,6 +519,7 @@ ui.resForm.addEventListener('submit', async (e) => {
 
 function openMenu() {
     game.phase = 'menu';
+    document.body.classList.add('is-menu');
     countdownTimers.forEach(clearTimeout);
     ui.timer.hidden = true;
     ui.countdown.innerHTML = '';
@@ -526,4 +557,5 @@ skids.mesh.count = 0;
 requestAnimationFrame(() => ui.modes.forEach((b) => { b.disabled = false; }));
 
 // expose for automated testing only
-window.__drift = { vehicle, score, input, game, race, camera, getCamMode: () => camMode };
+document.body.classList.add('is-menu');
+window.__drift = { quality, vehicle, score, input, game, race, camera, getCamMode: () => camMode };

@@ -183,6 +183,7 @@
                             <button type="button" data-open="skills" aria-label="Skills"><i class="bi bi-lightning-charge-fill"></i><span>Skills</span></button>
                             <button type="button" data-open="blog" aria-label="Blog"><i class="bi bi-journal-richtext"></i><span>Blog</span></button>
                             <button type="button" data-open="music" aria-label="Music"><i class="bi bi-music-note-beamed"></i><span>Music</span></button>
+                            <button type="button" data-link="game.html" aria-label="Drift game"><i class="bi bi-controller"></i><span>Drift</span></button>
                             <button type="button" data-open="terminal" aria-label="Terminal"><i class="bi bi-terminal-fill"></i><span>Terminal</span></button>
                             <button type="button" data-open="resume" aria-label="Resume"><i class="bi bi-file-earmark-person-fill"></i><span>Resume</span></button>
                             <button type="button" data-open="contact" aria-label="Contact"><i class="bi bi-envelope-fill"></i><span>Contact</span></button>
@@ -270,6 +271,11 @@
                     <a class="app-btn" href="https://tiangoldanddiamond.com/" target="_blank" rel="noopener">Visit live site <i class="bi bi-arrow-up-right"></i></a>
                 </div>
             </article>
+            <a class="app-game" href="game.html">
+                <img src="assets/images/drift-cover.webp" alt="" width="1200" height="750">
+                <span><strong>Bichu Drift</strong><small>Side project · a 3D drift game with a global leaderboard</small></span>
+                <i class="bi bi-play-circle-fill"></i>
+            </a>
             <div class="app-note">
                 <strong>15+ apps shipped.</strong> Most are company products under NDA, so this shows only my freelance work, built from scratch.
             </div>
@@ -812,6 +818,28 @@
                             </a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="game-card">
+            <a class="game-card-media" href="game.html" aria-label="Play Bichu Drift">
+                <img src="assets/images/drift-cover.webp" width="1200" height="750" loading="lazy" decoding="async" alt="Bichu Drift: a purple drift coupé with green headlights in a night arena">
+                <span class="game-card-play"><i class="bi bi-play-fill"></i></span>
+            </a>
+            <div class="game-card-body">
+                <span class="project-label"><i class="bi bi-controller"></i> Side project · Playable</span>
+                <h3>Bichu Drift</h3>
+                <p>A 3D night-time drift game I built from scratch for this portfolio: custom arcade drift physics, a walled 2-lap drift race, combos, tyre smoke, a synthesised engine sound and a global leaderboard.</p>
+                <div class="tech-stack">
+                    <span>Three.js</span>
+                    <span>WebGL</span>
+                    <span>Supabase</span>
+                    <span>Web Audio</span>
+                </div>
+                <div class="project-links">
+                    <a href="game.html" class="btn btn-primary"><i class="bi bi-play-fill me-1"></i> Play now</a>
+                    <span class="game-card-hint"><i class="bi bi-keyboard"></i> Keyboard, gamepad or touch</span>
                 </div>
             </div>
         </article>

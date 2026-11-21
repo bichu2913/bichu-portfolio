@@ -52,6 +52,18 @@
     </div>
 </div>
 
+<!-- Touch controls (phones / tablets) -->
+<div class="touch" aria-hidden="true">
+    <div class="touch-steer"><span class="touch-track"></span><span class="touch-knob"><i class="bi bi-arrow-left-right"></i></span></div>
+    <button type="button" class="touch-reset" data-touch="reset"><i class="bi bi-arrow-counterclockwise"></i></button>
+    <div class="touch-pedals">
+        <button type="button" class="touch-btn touch-drift" data-pedal="handbrake">DRIFT</button>
+        <button type="button" class="touch-btn touch-brake" data-pedal="brake"><i class="bi bi-chevron-double-down"></i></button>
+        <button type="button" class="touch-btn touch-gas" data-pedal="throttle"><i class="bi bi-chevron-double-up"></i></button>
+    </div>
+</div>
+<div class="rotate-hint"><i class="bi bi-phone-landscape"></i><span>Turn your phone sideways for the best view</span></div>
+
 <!-- Start menu -->
 <div class="intro is-open" role="dialog" aria-labelledby="intro-title">
     <div class="intro-card">
@@ -87,6 +99,7 @@
                 <div><kbd>Esc</kbd><span>Pause / menu</span></div>
             </div>
             <p class="intro-pad"><i class="bi bi-controller"></i> Gamepad: RT throttle, LT brake, A handbrake.</p>
+            <p class="intro-pad intro-touch-help"><i class="bi bi-phone"></i> Touch: slide the left pad to steer, hold GAS, tap DRIFT while turning.</p>
         </div>
     </div>
 </div>

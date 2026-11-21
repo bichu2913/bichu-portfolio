@@ -291,6 +291,11 @@
         });
     };
 
+    // Links that leave the OS (e.g. the drift game)
+    screen.querySelectorAll('[data-link]').forEach((btn) => {
+        btn.addEventListener('click', () => { location.href = btn.dataset.link; });
+    });
+
     // Every [data-open] control on the desktop opens its app.
     screen.querySelectorAll(':scope > header [data-open], .os-desktop [data-open], .os-dock [data-open]').forEach((btn) => {
         btn.addEventListener('click', () => openApp(btn.dataset.open));
@@ -394,6 +399,7 @@
                     '  contact     ways to reach me',
                     '  social      links',
                     '  music, play, pause, next, lamp',
+                    '  drift       play the drift game',
                     '  neofetch    system info',
                     '  ls, date, echo, clear, exit',
                 ].join('\n')),
@@ -428,6 +434,7 @@
                     '            Status: available for freelance',
                 ].join('\n'), 'term-hi'),
                 music: () => open('music', 'Opening Music…'),
+                drift: () => { print('Starting Bichu Drift… start your engines.', 'term-hi'); setTimeout(() => { location.href = 'game.html'; }, 700); },
                 play: () => { print(`Playing ${music.tracks[music.index]?.title || 'music'}…`, 'term-hi'); musicCommand('play'); },
                 pause: () => { print('Paused.'); musicCommand('pause'); },
                 next: () => { print('Next song.'); musicCommand('next'); },

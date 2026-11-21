@@ -1418,3 +1418,29 @@
 }
 
 .app-note strong { color: var(--accent); }
+
+.app-game {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    margin-top: 18px;
+    padding: 10px;
+    border: 1px solid rgba(217,183,120,0.35);
+    border-radius: 12px;
+    background: rgba(217,183,120,0.06);
+    color: var(--text);
+    text-decoration: none;
+}
+
+.app-game:hover { border-color: var(--accent); color: var(--text); }
+.app-game img { width: 120px; height: 72px; border-radius: 8px; object-fit: cover; }
+.app-game strong { display: block; font-size: 15px; }
+.app-game small { color: var(--muted); font-size: 12.5px; }
+.app-game i { color: var(--accent); font-size: 30px; }
+
+/* 9 dock apps: keep the dock inside narrow phone screens */
+@media (max-width: 767px) {
+    .os-dock { max-width: calc(100vw - 16px); gap: 4px; padding: 6px; }
+    .os-dock button { width: min(40px, calc((100vw - 60px) / 9)); height: min(40px, calc((100vw - 60px) / 9)); font-size: 17px; }
+}
