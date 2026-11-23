@@ -2275,3 +2275,10 @@ img { max-width: 100%; }
     .game-card-media { aspect-ratio: 16 / 10; }
     .game-card-body { padding: 24px; }
 }
+
+/* ---------- Phone fixes: comfortable tap targets ---------- */
+@media (max-width: 767px) {
+    .footer a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px; margin: 0 6px 0 0; }
+    .contact-item p a { display: inline-flex; align-items: center; min-height: 44px; }
+    .navbar-nav .nav-link { min-height: 44px; display: flex; align-items: center; }
+}

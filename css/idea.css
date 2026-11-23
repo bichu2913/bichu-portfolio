@@ -543,3 +543,7 @@
     .idea-ui .u, .idea-launch { animation: none !important; opacity: 1; }
     .idea-scene { transition: none; }
 }
+
+@media (max-width: 767px) {
+    .idea-mail a { display: inline-flex; align-items: center; min-height: 44px; }
+}

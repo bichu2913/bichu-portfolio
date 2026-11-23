@@ -1444,3 +1444,20 @@
     .os-dock { max-width: calc(100vw - 16px); gap: 4px; padding: 6px; }
     .os-dock button { width: min(40px, calc((100vw - 60px) / 9)); height: min(40px, calc((100vw - 60px) / 9)); font-size: 17px; }
 }
+
+/* ---------- Phone fixes (tested on a real Galaxy M21) ---------- */
+@media (max-width: 767px) {
+    /* top bar: never wrap the logo or clock when the now-playing chip appears */
+    .os-logo, .os-clock { white-space: nowrap; }
+    .os-np { min-width: 0; flex: 0 1 auto; }
+    .os-menubar:has(.os-np:not([hidden])) .os-logo em { display: none; }
+    .os-menubar { gap: 10px; }
+
+    /* dock: largest icons that fit 9 apps (about 42px on a 411px-wide phone) */
+    .os-dock { max-width: calc(100vw - 8px); gap: 2px; padding: 4px; }
+    .os-dock button {
+        width: min(46px, calc((100vw - 34px) / 9));
+        height: min(46px, calc((100vw - 34px) / 9));
+        font-size: 18px;
+    }
+}

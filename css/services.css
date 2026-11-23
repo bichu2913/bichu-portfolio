@@ -851,3 +851,22 @@ html.svc-locked { overflow: hidden; }
     .svc-panel-close { top: 14px; right: 14px; width: 36px; height: 36px; }
     .svc-panel-desc { font-size: 15px; }
 }
+
+/* ---------- Phones: compact two-column service cards (details open in the panel) ---------- */
+@media (max-width: 767px) {
+    .svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .svc-card { min-height: 0; padding: 14px; border-radius: 16px; }
+    .svc-card-top { margin-bottom: 12px; }
+    .svc-card .svc-icon { width: 42px; height: 42px; }
+    .svc-card .svc-icon-face { font-size: 19px; border-radius: 12px; }
+    .svc-card .svc-icon-back { border-radius: 12px; }
+    .svc-card-num { font-size: 11px; }
+    .svc-card-group, .svc-card-summary, .svc-card .svc-tags { display: none; }
+    .svc-card-title { margin: 0; font-size: 15px; line-height: 1.25; }
+    .svc-card-foot { padding-top: 10px; }
+    .svc-card-more { font-size: 12.5px; }
+    /* the featured AI card keeps its summary across both columns */
+    .svc-card-featured { grid-column: 1 / -1; }
+    .svc-card-featured .svc-card-summary { display: block; margin-top: 6px; font-size: 13.5px; }
+    .svc-card-featured .svc-card-title { font-size: 19px; }
+}
