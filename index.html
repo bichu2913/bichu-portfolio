@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="css/os.css">
 <link rel="stylesheet" href="css/services.css">
 <link rel="stylesheet" href="css/idea.css">
+<link rel="stylesheet" href="css/chat.css">
 </head>
 <body>
 
@@ -178,6 +179,7 @@
 
                         <!-- dock -->
                         <nav class="os-dock" aria-label="Dock">
+                            <button type="button" data-open="chat" aria-label="Ask Bichu (AI chat)"><i class="bi bi-chat-dots-fill"></i><span>Ask Bichu</span></button>
                             <button type="button" data-open="about" aria-label="About"><i class="bi bi-person-fill"></i><span>About</span></button>
                             <button type="button" data-open="projects" aria-label="Projects"><i class="bi bi-folder-fill"></i><span>Projects</span></button>
                             <button type="button" data-open="skills" aria-label="Skills"><i class="bi bi-lightning-charge-fill"></i><span>Skills</span></button>
@@ -345,6 +347,10 @@
             <ol class="music-list music-sp-list" aria-label="English playlist"></ol>
           </div>
         </div>
+    </template>
+
+    <template id="app-chat" data-title="Ask Bichu — AI assistant" data-icon="bi-chat-dots-fill" data-size="520x560">
+        <div class="chat-mount"></div>
     </template>
 
     <template id="app-resume" data-title="Resume" data-icon="bi-file-earmark-person-fill" data-size="520x420">
@@ -1249,6 +1255,18 @@
 
 </footer>
 
+<button type="button" class="chat-fab" aria-label="Open Ask Bichu, the AI assistant" aria-expanded="false" aria-controls="chat-panel">
+    <i class="bi bi-chat-dots-fill"></i><span class="chat-fab-label">Ask Bichu</span>
+</button>
+<section class="chat-panel" id="chat-panel" role="dialog" aria-label="Ask Bichu, AI assistant" hidden>
+    <header class="chat-panel-head">
+        <span class="chat-avatar">B</span>
+        <div><strong>Ask Bichu</strong><small><i class="chat-dot"></i> AI assistant · replies instantly</small></div>
+        <button type="button" class="chat-close" aria-label="Close chat"><i class="bi bi-x-lg"></i></button>
+    </header>
+    <div class="chat-mount"></div>
+</section>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="js/site-config.js"></script>
@@ -1258,6 +1276,7 @@
 <script src="js/services-data.js"></script>
 <script src="js/services.js"></script>
 <script src="js/idea.js"></script>
+<script src="js/chat.js"></script>
 
 </body>
 </html>

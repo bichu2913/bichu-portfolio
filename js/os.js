@@ -329,6 +329,11 @@
 
     /* ---------- App behaviour ---------- */
     const apps = {
+        chat(win) {
+            const mount = win.querySelector('.chat-mount');
+            if (window.mountAskBichu) window.mountAskBichu(mount);
+            else mount.innerHTML = '<p class="app-muted">The assistant could not load. Email bichuamz@gmail.com.</p>';
+        },
         blog(win) {
             const box = win.querySelector('.app-blog-list');
             articles.then((list) => {

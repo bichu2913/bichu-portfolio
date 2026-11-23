@@ -1,0 +1,238 @@
+/* =========================================================
+   "Ask Bichu" AI chatbot: floating launcher, panel, OS app
+   ========================================================= */
+
+/* ---------- Floating launcher ---------- */
+.chat-fab {
+    position: fixed;
+    right: max(20px, env(safe-area-inset-right));
+    bottom: max(20px, env(safe-area-inset-bottom));
+    z-index: 1040;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px 14px 16px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #f3dfae, var(--accent) 55%, #b48a45);
+    color: #15110a;
+    font: 700 15px 'Space Grotesk', sans-serif;
+    box-shadow: 0 14px 30px rgba(0,0,0,0.45), 0 0 0 0 rgba(217,183,120,0.55);
+    cursor: pointer;
+    animation: chatPulse 3s ease-out infinite;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.chat-fab i { font-size: 20px; }
+.chat-fab:hover { transform: translateY(-3px); }
+.chat-fab.is-open { animation: none; }
+
+@keyframes chatPulse {
+    0%, 60% { box-shadow: 0 14px 30px rgba(0,0,0,0.45), 0 0 0 0 rgba(217,183,120,0.5); }
+    100% { box-shadow: 0 14px 30px rgba(0,0,0,0.45), 0 0 0 16px rgba(217,183,120,0); }
+}
+
+/* ---------- Panel ---------- */
+.chat-panel {
+    position: fixed;
+    right: max(20px, env(safe-area-inset-right));
+    bottom: calc(max(20px, env(safe-area-inset-bottom)) + 70px);
+    z-index: 1041;
+    display: flex;
+    width: min(400px, calc(100vw - 32px));
+    height: min(600px, calc(100svh - 140px));
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(217,183,120,0.45);
+    border-radius: 22px;
+    background:
+        radial-gradient(70% 40% at 100% 0%, rgba(217,183,120,0.14), transparent 70%),
+        linear-gradient(180deg, rgba(20,23,28,0.98), rgba(11,13,17,0.99));
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 50px rgba(217,183,120,0.12);
+    transform-origin: bottom right;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.chat-panel[hidden] { display: none; }
+.chat-panel.is-entering { opacity: 0; transform: translateY(12px) scale(0.96); }
+
+.chat-panel-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.chat-avatar {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    flex: none;
+    place-items: center;
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    background: rgba(217,183,120,0.1);
+    color: var(--accent);
+    font: 800 20px 'Syne', sans-serif;
+}
+
+.chat-panel-head strong { display: block; color: var(--text); font: 700 16px 'Syne', sans-serif; }
+.chat-panel-head small { color: var(--muted); font-size: 12px; }
+.chat-dot { display: inline-block; width: 7px; height: 7px; margin-right: 4px; border-radius: 50%; background: #4ade80; vertical-align: 1px; }
+
+.chat-close {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    margin-left: auto;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.chat-close:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- Shared conversation view (panel + OS window) ---------- */
+.chat { display: flex; min-height: 0; flex: 1; flex-direction: column; height: 100%; }
+
+.chat-log {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.chat-msg {
+    max-width: 86%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.chat-bot {
+    align-self: flex-start;
+    border: 1px solid rgba(217,183,120,0.22);
+    border-bottom-left-radius: 5px;
+    background: rgba(255,255,255,0.035);
+    color: var(--text);
+}
+
+.chat-user {
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+    background: var(--accent);
+    color: #15110a;
+    font-weight: 500;
+}
+
+.chat-msg a { color: var(--accent); text-decoration: underline; }
+.chat-user a { color: #15110a; }
+.chat-error { border-color: rgba(239,143,132,0.4); color: #f3b2aa; }
+
+.chat-typing { display: flex; gap: 5px; padding: 13px 16px; }
+
+.chat-typing i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: chatDot 1s ease-in-out infinite;
+}
+
+.chat-typing i:nth-child(2) { animation-delay: 0.15s; }
+.chat-typing i:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes chatDot { 0%, 100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
+
+.chat-suggest { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 16px 10px; }
+.chat-suggest:empty { display: none; }
+
+.chat-suggest button {
+    padding: 8px 12px;
+    border: 1px solid rgba(217,183,120,0.4);
+    border-radius: 999px;
+    background: rgba(217,183,120,0.06);
+    color: var(--accent);
+    font: 600 13px 'Space Grotesk', sans-serif;
+    cursor: pointer;
+}
+
+.chat-suggest button:hover { background: rgba(217,183,120,0.16); }
+
+.chat-form {
+    display: flex;
+    gap: 8px;
+    padding: 12px 14px 8px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.chat-input {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    font: 500 16px 'Space Grotesk', sans-serif;   /* 16px: no zoom-on-focus on phones */
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+.chat-input:focus { border-color: var(--accent); outline: 0; box-shadow: 0 0 0 3px rgba(217,183,120,0.15); }
+
+.chat-send {
+    display: grid;
+    width: 46px;
+    flex: none;
+    place-items: center;
+    border: 0;
+    border-radius: 14px;
+    background: var(--accent);
+    color: #15110a;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.chat-send:disabled, .chat-input:disabled { opacity: 0.55; cursor: wait; }
+.chat-note { margin: 0; padding: 0 14px 10px; color: #6b737c; font-size: 11.5px; text-align: center; }
+
+/* inside the Bichu OS window */
+.os-window[data-app="chat"] .os-body { display: flex; padding: 0; overflow: hidden; }
+.os-window[data-app="chat"] .chat-mount { display: flex; flex: 1; min-height: 0; }
+
+/* ---------- Phones ---------- */
+@media (max-width: 767px) {
+    .chat-fab { padding: 14px; }
+    .chat-fab-label { display: none; }
+    .chat-fab i { font-size: 22px; }
+    /* the OS dock already has "Ask Bichu" while the hero is on screen */
+    body.chat-hero-visible .chat-fab { opacity: 0; pointer-events: none; transform: scale(0.8); }
+    .chat-panel {
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100svh;
+        border-radius: 0;
+        border-width: 0;
+        background: #0b0d11;
+    }
+    /* 10 dock apps: Resume stays in the site menu, so drop it from the phone dock */
+    .os-dock [data-open="resume"] { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .chat-fab, .chat-typing i { animation: none; }
+    .chat-panel { transition: none; }
+}
