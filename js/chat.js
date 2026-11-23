@@ -22,7 +22,7 @@
           answer: "Bichu builds complete products end to end:\n• Mobile apps (Flutter, Android, iOS)\n• Web apps and websites (Next.js, React, Django)\n• Backends and APIs\n• AI features: chatbots, RAG, agents, document and voice AI\n• Automation, IoT, data and ML, cloud and DevOps, browser extensions, desktop software and UI/UX design.",
           next: ['Tell me about TIAN', 'AI projects', 'I want to hire him'] },
         { id: 'tian', words: ['tian', 'jewel', 'gold', 'diamond', 'case study', 'project', 'portfolio work', 'example', 'previous work'],
-          answer: "TIAN Gold & Diamond is a luxury jewellery platform Bichu built solo: the customer website, the mobile app, the backend and \"Ask TIAN\", an AI shopping assistant that can design from a picture. It has 16 collections, live IBJA gold rates and a gold value calculator. Stack: Flutter, Next.js, Supabase and generative AI.",
+          answer: "TIAN Gold & Diamond is a luxury jewellery platform Bichu built solo: the customer website, the mobile app, the backend and \"Ask TIAN\", an AI shopping assistant that can design from a picture. It has 16 collections, live IBJA gold rates and a gold value calculator. Stack: Flutter, Next.js, Supabase and generative AI. You can download the Android app from the TIAN card in the Projects section.",
           next: ['What else has he built?', 'I want something similar'] },
         { id: 'more-work', words: ['what else', 'other project', 'more project', 'apps built', 'how many'],
           answer: "Bichu has shipped 15+ apps. Most are company products under NDA, so the portfolio shows freelance work built from scratch: TIAN Gold & Diamond, this portfolio (Bichu OS) and Bichu Drift, a 3D racing game.",
