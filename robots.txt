@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bichu2913.github.io/bichu-portfolio/sitemap.xml
